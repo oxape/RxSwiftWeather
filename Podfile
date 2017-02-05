@@ -6,7 +6,18 @@ target 'RxSwiftWeather' do
   use_frameworks!
 
   # Pods for RxSwiftWeather
-
+  # Rx
+  pod 'RxSwift', '~> 3.0'
+  pod 'RxCocoa', '~> 3.0'
+  pod 'RxOptional', '~> 3.1'
+  pod 'RxSwiftUtilities', '~> 1.0.1'
+  
+  #Layout
+  pod 'SnapKit'
+  
+  #UI Control
+  pod 'MBProgressHUD', '~> 1.0.0'
+  
   target 'RxSwiftWeatherTests' do
     inherit! :search_paths
     # Pods for testing
