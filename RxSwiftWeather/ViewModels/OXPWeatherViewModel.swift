@@ -29,7 +29,6 @@ struct OXPWeatherViewModel {
         activityIndicator = ac
         
         weatherModel = weatherApiService.getWeather().trackActivity(ac).shareReplay(1)
-//        weather = weatherApiService.getWeather().trackActivity(activityIndicator).asDriver(onErrorJustReturn: Driver<OXPWeatherModel>.empty())
         
         cityName = weatherModel.map({
             $0.cityName
