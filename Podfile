@@ -17,7 +17,8 @@ target 'RxSwiftWeather' do
   
   #UI Control
   pod 'MBProgressHUD', '~> 1.0.0'
-  
+  #Network
+  pod 'Moya-ObjectMapper/RxSwift'
   pod 'Moya/RxSwift'
   
   target 'RxSwiftWeatherTests' do

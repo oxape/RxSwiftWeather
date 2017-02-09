@@ -10,6 +10,7 @@ import Foundation
 import Moya
 import RxSwift
 import RxCocoa
+import Moya_ObjectMapper
 
 enum OXPWeatherAPIType {
     case ThinkpageWeatherAPI
@@ -24,8 +25,6 @@ class OXPWeatherAPIService {
     }
     
     func getWeather()->Observable<OXPWeatherModel> {
-        return provider.request(.Weather(cityName:"hefei")).map { response in 
-            return OXPWeatherModel(cityName:"hefei", temperature: 15.0, code: 0, text:"Sunny")
-        }
+        return provider.request(.Weather(cityName:"hefei")).mapObject(OXPWeatherModel.self).debug()
     }
 }

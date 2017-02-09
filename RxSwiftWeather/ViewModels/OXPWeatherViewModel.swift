@@ -15,6 +15,8 @@ struct OXPWeatherViewModel {
     fileprivate let weatherModel: Observable<OXPWeatherModel>
     let disposeBag = DisposeBag()
     let weatherApiService = OXPWeatherAPIService(weatherAPIType:.ThinkpageWeatherAPI)
+    //输入
+    let refreshAction = PublishSubject<Void>()
     //输出
     var cityName:Driver<String>
     var weather:Driver<String>
@@ -24,7 +26,8 @@ struct OXPWeatherViewModel {
     init() {
         let ac = ActivityIndicator()
         activityIndicator = ac
-        weatherModel = weatherApiService.getWeather().trackActivity(ac)
+        
+        weatherModel = weatherApiService.getWeather().trackActivity(ac).shareReplay(1)
 //        weather = weatherApiService.getWeather().trackActivity(activityIndicator).asDriver(onErrorJustReturn: Driver<OXPWeatherModel>.empty())
         
         cityName = weatherModel.map({
@@ -36,7 +39,7 @@ struct OXPWeatherViewModel {
         }).asDriver(onErrorJustReturn: "")
         
         temperature = weatherModel.map({
-            String($0.temperature)
+            String(Int($0.temperature))+"℃"
         }).asDriver(onErrorJustReturn: "")
     }
 }

@@ -73,7 +73,6 @@ class OXPHomeViewController: OXPBaseViewController {
         viewModel.temperature.drive(temperatureLabel.rx.text).addDisposableTo(self.disposeBag)
         viewModel
             .activityIndicator
-            .debug()
             .distinctUntilChanged()
             .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible).addDisposableTo(self.disposeBag)
         viewModel.cityName.drive(self.rx.title).addDisposableTo(self.disposeBag)

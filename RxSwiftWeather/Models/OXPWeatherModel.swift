@@ -7,11 +7,33 @@
 //
 
 import Foundation
+import ObjectMapper
 
-struct OXPWeatherModel {
-    let cityName: String
-    let temperature: Float
-    let code: Int
-    let text: String
+struct OXPWeatherModel: Mappable {
+    var cityName: String!
+    var text: String!
+    var code: Int!
+    var temperature: Float!
 //    let lastUpdate: NSDate 
+    
+    // MARK: JSON
+    init?(map: Map) { }
+    
+    mutating func mapping(map: Map) {
+        cityName <- map["results.0.location.name"]
+        
+        text <- map["results.0.now.text"]
+        
+        var codeText:String!
+        codeText <- map["results.0.now.code"]
+        if codeText != nil {
+            code = Int(codeText)
+        }
+        
+        var temperatureText:String!
+        temperatureText <- map["results.0.now.temperature"]
+        if temperatureText != nil {
+            temperature = Float(temperatureText)!+0.5
+        }
+    }
 }

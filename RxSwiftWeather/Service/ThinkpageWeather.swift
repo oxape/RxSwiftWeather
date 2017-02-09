@@ -22,7 +22,7 @@ extension ThinkpageWeather: TargetType {
     var path: String {
         switch self {
         case .Weather:
-            return "/now.json"
+            return "now.json"
         }
     }
     //动作的请求方法
