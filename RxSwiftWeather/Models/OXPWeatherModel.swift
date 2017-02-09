@@ -12,7 +12,7 @@ import ObjectMapper
 struct OXPWeatherModel: Mappable {
     var cityName: String!
     var text: String!
-    var code: Int!
+    var code: String!
     var temperature: Float!
 //    let lastUpdate: NSDate 
     
@@ -24,11 +24,7 @@ struct OXPWeatherModel: Mappable {
         
         text <- map["results.0.now.text"]
         
-        var codeText:String!
-        codeText <- map["results.0.now.code"]
-        if codeText != nil {
-            code = Int(codeText)
-        }
+        code <- map["results.0.now.code"]
         
         var temperatureText:String!
         temperatureText <- map["results.0.now.temperature"]

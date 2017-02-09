@@ -70,6 +70,7 @@ class OXPHomeViewController: OXPBaseViewController {
     
     override func createEvent() {
         viewModel.weather.drive(weatherLabel.rx.text).addDisposableTo(self.disposeBag)
+        viewModel.weatherImage.drive(weatherIcon.rx.image).addDisposableTo(self.disposeBag)
         viewModel.temperature.drive(temperatureLabel.rx.text).addDisposableTo(self.disposeBag)
         viewModel
             .activityIndicator
