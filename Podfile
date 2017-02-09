@@ -18,6 +18,8 @@ target 'RxSwiftWeather' do
   #UI Control
   pod 'MBProgressHUD', '~> 1.0.0'
   
+  pod 'Moya/RxSwift'
+  
   target 'RxSwiftWeatherTests' do
     inherit! :search_paths
     # Pods for testing
