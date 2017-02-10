@@ -17,9 +17,18 @@ struct OXPWeatherModel: Mappable {
 //    let lastUpdate: NSDate 
     
     // MARK: JSON
+    init() {
+        cityName = ""
+        text = ""
+        code = ""
+        temperature = 0
+    }
+    
     init?(map: Map) { }
     
     mutating func mapping(map: Map) {
+        print(map.JSON)
+        
         cityName <- map["results.0.location.name"]
         
         text <- map["results.0.now.text"]

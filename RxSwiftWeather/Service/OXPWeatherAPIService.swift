@@ -25,6 +25,6 @@ class OXPWeatherAPIService {
     }
     
     func getWeather()->Observable<OXPWeatherModel> {
-        return provider.request(.Weather(cityName:"hefei")).mapObject(OXPWeatherModel.self).debug()
+        return provider.request(.Weather(cityName:"hefei")).mapObject(OXPWeatherModel.self)
     }
 }

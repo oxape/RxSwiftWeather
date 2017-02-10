@@ -45,7 +45,7 @@ class OXPHomeViewController: OXPBaseViewController {
         weatherIcon.snp.makeConstraints { (maker) in
             maker.top.equalToSuperview()
             maker.left.equalToSuperview()
-            maker.size.equalTo(CGSize(width: 24, height: 24))
+            maker.size.equalTo(CGSize(width: 40, height: 40))
             maker.bottom.lessThanOrEqualToSuperview()
         }
         
@@ -66,9 +66,20 @@ class OXPHomeViewController: OXPBaseViewController {
             maker.top.equalTo(weatherContainer.snp.bottom).offset(8)
             maker.left.equalTo(weatherContainer)
         }
+        
+        let button = UIButton()
+        button.backgroundColor = UIColor.brown
+        scrollView.addSubview(button)
+        button.snp.makeConstraints { (maker) in
+            maker.top.equalTo(temperatureLabel.snp.bottom).offset(8)
+            maker.height.equalTo(30)
+            maker.left.right.equalToSuperview()
+        }
+        button.rx.tap.bindTo(viewModel.refreshAction).addDisposableTo(self.disposeBag)
     }
     
     override func createEvent() {
+        viewModel.refreshAction.onNext(())
         viewModel.weather.drive(weatherLabel.rx.text).addDisposableTo(self.disposeBag)
         viewModel.weatherImage.drive(weatherIcon.rx.image).addDisposableTo(self.disposeBag)
         viewModel.temperature.drive(temperatureLabel.rx.text).addDisposableTo(self.disposeBag)

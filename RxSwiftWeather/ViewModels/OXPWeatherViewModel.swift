@@ -12,9 +12,9 @@ import RxCocoa
 import RxSwiftUtilities
 
 struct OXPWeatherViewModel {
-    fileprivate let weatherModel: Observable<OXPWeatherModel>
+    fileprivate let weatherModel: Driver<OXPWeatherModel>
     let disposeBag = DisposeBag()
-    let weatherApiService = OXPWeatherAPIService(weatherAPIType:.ThinkpageWeatherAPI)
+    var weatherApiService:OXPWeatherAPIService;
     //输入
     let refreshAction = PublishSubject<Void>()
     //输出
@@ -26,9 +26,15 @@ struct OXPWeatherViewModel {
     
     init() {
         let ac = ActivityIndicator()
+        let apiService = OXPWeatherAPIService(weatherAPIType:.ThinkpageWeatherAPI)
         activityIndicator = ac
+        weatherApiService = apiService
         
-        weatherModel = weatherApiService.getWeather().trackActivity(ac).shareReplay(1)
+        weatherModel = refreshAction.flatMapLatest({
+            return apiService
+                .getWeather()
+                .trackActivity(ac)
+        }).asDriver(onErrorJustReturn: OXPWeatherModel())
         
         cityName = weatherModel.map({
             $0.cityName
