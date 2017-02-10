@@ -63,7 +63,7 @@ class OXPHomeViewController: OXPBaseViewController {
         temperatureLabel.textColor = UIColor.white
         scrollView.addSubview(temperatureLabel)
         temperatureLabel.snp.makeConstraints { (maker) in
-            maker.top.equalTo(weatherContainer.snp.bottom).offset(8)
+            maker.top.equalTo(weatherContainer.snp.bottom).offset(0)
             maker.left.equalTo(weatherContainer)
         }
         
