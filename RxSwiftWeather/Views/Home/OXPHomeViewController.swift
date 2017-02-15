@@ -69,9 +69,10 @@ class OXPHomeViewController: OXPBaseViewController {
         
         let button = UIButton()
         button.backgroundColor = UIColor.brown
-        scrollView.addSubview(button)
+        button.setTitle("refresh", for: UIControlState.normal)
+        superView.addSubview(button)
         button.snp.makeConstraints { (maker) in
-            maker.top.equalTo(temperatureLabel.snp.bottom).offset(8)
+            maker.bottom.equalTo(scrollView.snp.bottom).offset(-8)
             maker.height.equalTo(30)
             maker.left.right.equalToSuperview()
         }
@@ -79,7 +80,6 @@ class OXPHomeViewController: OXPBaseViewController {
     }
     
     override func createEvent() {
-        viewModel.refreshAction.onNext(())
         viewModel.weather.drive(weatherLabel.rx.text).addDisposableTo(self.disposeBag)
         viewModel.weatherImage.drive(weatherIcon.rx.image).addDisposableTo(self.disposeBag)
         viewModel.temperature.drive(temperatureLabel.rx.text).addDisposableTo(self.disposeBag)

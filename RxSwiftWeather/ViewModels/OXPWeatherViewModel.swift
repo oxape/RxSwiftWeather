@@ -30,7 +30,7 @@ struct OXPWeatherViewModel {
         activityIndicator = ac
         weatherApiService = apiService
         
-        weatherModel = refreshAction.flatMapLatest({
+        weatherModel = refreshAction.debug().flatMapLatest({
             return apiService
                 .getWeather()
                 .trackActivity(ac)
@@ -38,18 +38,18 @@ struct OXPWeatherViewModel {
         
         cityName = weatherModel.map({
             $0.cityName
-        }).asDriver(onErrorJustReturn: "")
+        })
         
         weather = weatherModel.map({
             $0.text
-        }).asDriver(onErrorJustReturn: "")
+        })
         
         weatherImage = weatherModel.map({
             UIImage(named: "thinpageWeather"+$0.code)
-        }).asDriver(onErrorJustReturn: nil)
+        })
         
         temperature = weatherModel.map({
             String(Int($0.temperature))+"℃"
-        }).asDriver(onErrorJustReturn: "")
+        })
     }
 }
