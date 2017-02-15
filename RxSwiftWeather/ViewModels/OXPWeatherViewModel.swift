@@ -34,6 +34,7 @@ struct OXPWeatherViewModel {
             return apiService
                 .getWeather()
                 .trackActivity(ac)
+                .asDriver(onErrorJustReturn: OXPWeatherModel())
         }).asDriver(onErrorJustReturn: OXPWeatherModel())
         
         cityName = weatherModel.map({
