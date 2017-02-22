@@ -66,17 +66,6 @@ class OXPHomeViewController: OXPBaseViewController {
             maker.top.equalTo(weatherContainer.snp.bottom).offset(0)
             maker.left.equalTo(weatherContainer)
         }
-        
-        let button = UIButton()
-        button.backgroundColor = UIColor.brown
-        button.setTitle("refresh", for: UIControlState.normal)
-        superView.addSubview(button)
-        button.snp.makeConstraints { (maker) in
-            maker.bottom.equalTo(scrollView.snp.bottom).offset(-8)
-            maker.height.equalTo(30)
-            maker.left.right.equalToSuperview()
-        }
-        button.rx.tap.bindTo(viewModel.refreshAction).addDisposableTo(self.disposeBag)
     }
     
     override func createEvent() {
