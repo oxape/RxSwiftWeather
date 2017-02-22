@@ -17,6 +17,7 @@ target 'RxSwiftWeather' do
   
   #UI Control
   pod 'MBProgressHUD', '~> 1.0.0'
+  pod 'DGElasticPullToRefresh'
   #Network
   pod 'Moya-ObjectMapper/RxSwift'
   pod 'Moya/RxSwift'

@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.3.0)
+  - DGElasticPullToRefresh (1.1)
   - MBProgressHUD (1.0.0)
   - Moya (8.0.2):
     - Moya/Core (= 8.0.2)
@@ -30,6 +31,7 @@ PODS:
   - SnapKit (3.1.2)
 
 DEPENDENCIES:
+  - DGElasticPullToRefresh
   - MBProgressHUD (~> 1.0.0)
   - Moya-ObjectMapper/RxSwift
   - Moya/RxSwift
@@ -41,6 +43,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   Moya: 47f61da5b634aa71f676431b64ee0f81e976296d
   Moya-ObjectMapper: b7f1f44f02b14c97d8a8efe9c6f8e6072252a58c
@@ -52,6 +55,6 @@ SPEC CHECKSUMS:
   RxSwiftUtilities: 57e77c17b885931c37aa038f114f14fd1f478ac2
   SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
 
-PODFILE CHECKSUM: 7e95b6b77b124f2de1e419a2129f47ab83fc87e8
+PODFILE CHECKSUM: 3172ad2f2b5955b70e10e2bd0a449d7aa45563cc
 
 COCOAPODS: 1.1.1
