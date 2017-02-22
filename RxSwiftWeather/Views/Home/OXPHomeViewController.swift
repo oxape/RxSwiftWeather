@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import DGElasticPullToRefresh
 
 class OXPHomeViewController: OXPBaseViewController {
 
@@ -16,6 +17,8 @@ class OXPHomeViewController: OXPBaseViewController {
     let weatherIcon = UIImageView()
     let weatherLabel = UILabel()
     let temperatureLabel = UILabel()
+    let backgroundImageView = UIImageView()
+    
     let viewModel = OXPWeatherViewModel()
     
     override func viewDidLoad() {
@@ -28,11 +31,21 @@ class OXPHomeViewController: OXPBaseViewController {
     override func createViews() {
         
         let superView = self.view!
+        scrollView.backgroundColor = UIColor.lightGray
         superView.addSubview(scrollView)
         scrollView.snp.makeConstraints { (maker) in
             maker.right.left.equalTo(superView)
             maker.top.equalTo(self.view.snp.top)
             maker.bottom.equalTo(self.view.snp.bottom)
+        }
+        
+        backgroundImageView.image = UIImage(named: "testbackground")
+        scrollView.addSubview(backgroundImageView)
+        backgroundImageView.isHidden = true;
+        backgroundImageView.snp.makeConstraints { (maker) in
+            maker.top.equalToSuperview()
+            maker.left.right.equalTo(superView)
+            maker.bottom.equalToSuperview()
         }
         
         scrollView.addSubview(weatherContainer)
@@ -66,6 +79,17 @@ class OXPHomeViewController: OXPBaseViewController {
             maker.top.equalTo(weatherContainer.snp.bottom).offset(0)
             maker.left.equalTo(weatherContainer)
         }
+        
+        // Initialize tableView
+        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+        loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
+        scrollView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            self?.viewModel.refresh()
+            
+            self?.scrollView.dg_stopLoading()
+            }, loadingView: loadingView)
+        scrollView.dg_setPullToRefreshFillColor(UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0))
+//        scrollView.dg_setPullToRefreshBackgroundColor(scrollView.backgroundColor!)
     }
     
     override func createEvent() {
@@ -79,5 +103,9 @@ class OXPHomeViewController: OXPBaseViewController {
         viewModel.cityName.drive(self.rx.title).addDisposableTo(self.disposeBag)
         
         viewModel.refresh()
+    }
+    
+    deinit {
+        scrollView.dg_removePullToRefresh()
     }
 }
