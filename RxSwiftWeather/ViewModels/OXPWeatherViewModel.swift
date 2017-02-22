@@ -16,7 +16,7 @@ struct OXPWeatherViewModel {
     let disposeBag = DisposeBag()
     var weatherApiService:OXPWeatherAPIService;
     //输入
-    let refreshAction = PublishSubject<Void>()
+    fileprivate let refreshAction = PublishSubject<Void>()
     //输出
     var cityName:Driver<String>
     var weather:Driver<String>
@@ -52,5 +52,9 @@ struct OXPWeatherViewModel {
         temperature = weatherModel.map({
             String(Int($0.temperature))+"℃"
         })
+    }
+    
+    func refresh() {
+        self.refreshAction.on(.next())
     }
 }

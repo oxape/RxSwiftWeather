@@ -78,6 +78,6 @@ class OXPHomeViewController: OXPBaseViewController {
             .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible).addDisposableTo(self.disposeBag)
         viewModel.cityName.drive(self.rx.title).addDisposableTo(self.disposeBag)
         
-        viewModel.refreshAction.on(.next())
+        viewModel.refresh()
     }
 }
