@@ -30,7 +30,6 @@ extension UIImage {
         let context = CGContext.init(data: rawData, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
         context.draw(imageRef, in: CGRect(x:0, y:0, width:CGFloat(width), height:CGFloat(height)))
         
-        
         let startIndex = (Int(rect.minY) * bytesPerRow) + (Int(rect.minX) * bytesPerPixel)
         let bytesPerRowInRect = bytesPerPixel * Int(rect.width)
         var redSum:Int64 = 0;

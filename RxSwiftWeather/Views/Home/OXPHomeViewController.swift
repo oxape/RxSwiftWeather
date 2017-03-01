@@ -49,7 +49,7 @@ class OXPHomeViewController: OXPBaseViewController {
                 maker.height.equalTo(backgroundImageView.snp.width).multipliedBy(backgroundImage.size.height/backgroundImage.size.width)
                 maker.bottom.equalToSuperview()
             }
-            scrollView.backgroundColor = blurImage!.averageColorInRect(CGRect(x: 0, y: 100, width: backgroundImage.size.width, height: 1))
+            scrollView.backgroundColor = backgroundImage.averageColorInRect(CGRect(x: 0, y: 100, width: backgroundImage.size.width, height: 1))
         }
         
         scrollView.addSubview(weatherContainer)
