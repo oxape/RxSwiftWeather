@@ -25,13 +25,12 @@ class OXPHomeViewController: OXPBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.view.backgroundColor = UIColor.lightGray
+        self.view.backgroundColor = UIColor.white
     }
 
     override func createViews() {
-        
         let superView = self.view!
-        scrollView.backgroundColor = UIColor.lightGray
+        scrollView.backgroundColor = UIColor.white
         superView.addSubview(scrollView)
         scrollView.snp.makeConstraints { (maker) in
             maker.right.left.equalTo(superView)
@@ -39,13 +38,18 @@ class OXPHomeViewController: OXPBaseViewController {
             maker.bottom.equalTo(self.view.snp.bottom)
         }
         
-        backgroundImageView.image = UIImage(named: "testbackground")
-        scrollView.addSubview(backgroundImageView)
-        backgroundImageView.isHidden = true;
-        backgroundImageView.snp.makeConstraints { (maker) in
-            maker.top.equalToSuperview()
-            maker.left.right.equalTo(superView)
-            maker.bottom.equalToSuperview()
+        if let backgroundImage = UIImage(named: "testbackground") {
+            let blurImage = backgroundImage.maskedVariableBlur(radius: 5)
+            backgroundImageView.image = blurImage
+            scrollView.addSubview(backgroundImageView)
+            //        backgroundImageView.isHidden = true;
+            backgroundImageView.snp.makeConstraints { (maker) in
+                maker.top.equalToSuperview()
+                maker.left.right.equalTo(superView)
+                maker.height.equalTo(backgroundImageView.snp.width).multipliedBy(backgroundImage.size.height/backgroundImage.size.width)
+                maker.bottom.equalToSuperview()
+            }
+            scrollView.backgroundColor = blurImage!.averageColorInRect(CGRect(x: 0, y: 100, width: backgroundImage.size.width, height: 1))
         }
         
         scrollView.addSubview(weatherContainer)
@@ -89,7 +93,7 @@ class OXPHomeViewController: OXPBaseViewController {
             self?.scrollView.dg_stopLoading()
             }, loadingView: loadingView)
         scrollView.dg_setPullToRefreshFillColor(UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0))
-//        scrollView.dg_setPullToRefreshBackgroundColor(scrollView.backgroundColor!)
+        scrollView.dg_setPullToRefreshBackgroundColor(scrollView.backgroundColor!)
     }
     
     override func createEvent() {

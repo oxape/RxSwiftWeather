@@ -21,6 +21,8 @@ target 'RxSwiftWeather' do
   #Network
   pod 'Moya-ObjectMapper/RxSwift'
   pod 'Moya/RxSwift'
+  #Graphics
+  pod 'GPUImage'
   
   target 'RxSwiftWeatherTests' do
     inherit! :search_paths
