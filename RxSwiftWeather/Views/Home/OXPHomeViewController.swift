@@ -26,6 +26,8 @@ class OXPHomeViewController: OXPBaseViewController {
 
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.white
+        self.navigationController?.navigationBar.lt_setBackgroundColor(backgroundColor: scrollView.backgroundColor!)
+        self.navigationController?.navigationBar.lt_setElementsAlpha(alpha: 0.6)
     }
 
     override func createViews() {
@@ -94,6 +96,7 @@ class OXPHomeViewController: OXPBaseViewController {
             }, loadingView: loadingView)
         scrollView.dg_setPullToRefreshFillColor(UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0))
         scrollView.dg_setPullToRefreshBackgroundColor(scrollView.backgroundColor!)
+        self.view.draw(<#T##layer: CALayer##CALayer#>, in: <#T##CGContext#>)
     }
     
     override func createEvent() {

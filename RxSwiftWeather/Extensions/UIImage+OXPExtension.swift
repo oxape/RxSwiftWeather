@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Accelerate
+import GPUImage
 
 
 extension UIImage {
@@ -79,55 +79,11 @@ extension UIImage {
     }
     
     func maskedVariableBlur(radius: Float) -> UIImage? {
-        let image = CIImage(image: self)
-        //创建CIFilter
-        let blur = CIFilter(name:"CIMaskedVariableBlur")
-        //设置滤镜输入参数
-        blur?.setValue(image, forKey: kCIInputImageKey)
-        //设置模糊参数
-        blur?.setValue(NSNumber(value:radius), forKey: kCIInputRadiusKey)
-        let maskImage = self.maskImage(height: 100)
-//        maskImage.ciImage 可能为nil具体看官方注释
-        blur?.setValue(CIImage(image: maskImage), forKey: "inputMask")
+        let blurFilter = GPUImageGaussianBlurPositionFilter();
+        blurFilter.blurRadius = 10;
+        blurFilter.blurSize = 0.1
+        let blurredImage = blurFilter.image(byFilteringImage: self)
         
-        //得到处理后的图片
-        if let resultImage = blur?.outputImage {
-            let blurImage = UIImage(ciImage: resultImage)
-            return blurImage
-        }
-/*
-        //网上非说要用下面这个方式
-        if let resultImage = blur?.value(forKey: kCIOutputImageKey) {
-            let result = resultImage as! CIImage
-            let context = CIContext(options: nil)
-            // 创建输出
-            let outImage = context.createCGImage(result, from: result.extent);
-            
-            let blurImage = UIImage(cgImage: outImage!)
-            return blurImage
-        }
- */
-        return nil
-    }
-    
-    fileprivate func maskImage(height: CGFloat) -> UIImage {
-        UIGraphicsBeginImageContext(size)
-        let context = UIGraphicsGetCurrentContext()
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor.black.cgColor];
-        gradientLayer.startPoint = CGPoint(x:0.5, y:0)
-        gradientLayer.endPoint = CGPoint(x:0.5, y:1)
-        gradientLayer.frame = CGRect(x:0, y: 0, width:self.size.width, height:height)
-        gradientLayer.render(in: context!)
-//        context?.draw(gradientLayer as! CGLayer, at: CGPoint(x:0, y:0))
-        
-        let path = CGPath(rect: CGRect(x:0, y:height, width:self.size.width, height:self.size.height-height), transform: nil)
-        context?.addPath(path)
-        context?.setFillColor(UIColor.black.cgColor)
-        context?.fillPath()
-        
-        let scaledImage =  UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return scaledImage
+        return blurredImage;
     }
 }
