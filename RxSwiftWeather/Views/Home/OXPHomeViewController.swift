@@ -17,7 +17,7 @@ class OXPHomeViewController: OXPBaseViewController {
     let weatherIcon = UIImageView()
     let weatherLabel = UILabel()
     let temperatureLabel = UILabel()
-    let backgroundImageView = UIImageView()
+    let contentView = UIView()
     
     let viewModel = OXPWeatherViewModel()
     
@@ -25,14 +25,12 @@ class OXPHomeViewController: OXPBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.view.backgroundColor = UIColor.white
-        self.navigationController?.navigationBar.lt_setBackgroundColor(backgroundColor: scrollView.backgroundColor!)
         self.navigationController?.navigationBar.lt_setElementsAlpha(alpha: 0.6)
     }
 
     override func createViews() {
         let superView = self.view!
-        scrollView.backgroundColor = UIColor.white
+        scrollView.backgroundColor = UIColor.clear
         superView.addSubview(scrollView)
         scrollView.snp.makeConstraints { (maker) in
             maker.right.left.equalTo(superView)
@@ -40,18 +38,24 @@ class OXPHomeViewController: OXPBaseViewController {
             maker.bottom.equalTo(self.view.snp.bottom)
         }
         
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { (maker) in
+            maker.top.equalTo(scrollView.snp.top)
+            maker.left.right.equalTo(scrollView)
+            //状态栏高度为20导航栏高度为44
+            maker.size.equalTo(CGSize.init(width: self.view.bounds.size.width, height: self.view.bounds.size.height-64))
+            maker.size.bottom.equalTo(scrollView)
+        }
+        
         if let backgroundImage = UIImage(named: "testbackground") {
-            let blurImage = backgroundImage.maskedVariableBlur(radius: 5)
-            backgroundImageView.image = blurImage
-            scrollView.addSubview(backgroundImageView)
-            //        backgroundImageView.isHidden = true;
-            backgroundImageView.snp.makeConstraints { (maker) in
-                maker.top.equalToSuperview()
-                maker.left.right.equalTo(superView)
-                maker.height.equalTo(backgroundImageView.snp.width).multipliedBy(backgroundImage.size.height/backgroundImage.size.width)
-                maker.bottom.equalToSuperview()
-            }
-            scrollView.backgroundColor = backgroundImage.averageColorInRect(CGRect(x: 0, y: 100, width: backgroundImage.size.width, height: 1))
+            UIGraphicsBeginImageContext(self.view.bounds.size)
+            UIImage(named: "testbackground")?.draw(in: self.view.bounds)
+            let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
+            self.view.backgroundColor = UIColor(patternImage: image)
+            let color = backgroundImage.averageColorInRect(CGRect(x: 0, y: 100, width: backgroundImage.size.width, height: 1))
+            
+            self.navigationController?.navigationBar.lt_setBackgroundColor(backgroundColor: color.withAlphaComponent(0.8))
         }
         
         scrollView.addSubview(weatherContainer)
@@ -95,8 +99,8 @@ class OXPHomeViewController: OXPBaseViewController {
             self?.scrollView.dg_stopLoading()
             }, loadingView: loadingView)
         scrollView.dg_setPullToRefreshFillColor(UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0))
+        //这里为透明色所有才能出现现在的效果
         scrollView.dg_setPullToRefreshBackgroundColor(scrollView.backgroundColor!)
-        self.view.draw(<#T##layer: CALayer##CALayer#>, in: <#T##CGContext#>)
     }
     
     override func createEvent() {
@@ -106,7 +110,8 @@ class OXPHomeViewController: OXPBaseViewController {
         viewModel
             .activityIndicator
             .distinctUntilChanged()
-            .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible).addDisposableTo(self.disposeBag)
+            .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)
+            .addDisposableTo(self.disposeBag)
         viewModel.cityName.drive(self.rx.title).addDisposableTo(self.disposeBag)
         
         viewModel.refresh()

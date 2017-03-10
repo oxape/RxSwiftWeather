@@ -9,8 +9,8 @@
 import UIKit
 
 extension CIFilter {
-    func printBlurFilterNames() {
-        let array = CIFilter.filterNames(inCategory: kCICategoryBlur)
+    class func printBlurFilterNames() {
+        let array = CIFilter.filterNames(inCategory: nil)
         var localizedNames:[String] = []
         for name in array {
             localizedNames.append(CIFilter.localizedName(forFilterName: name)!)

@@ -63,27 +63,27 @@ extension UIImage {
     }
     
     func blurImage(radius: Float) -> UIImage? {
-        let image = CIImage(image: self)
-        //创建CIFilter
-        let gaussianBlur = CIFilter(name:"CIGaussianBlur")
-        //设置滤镜输入参数
-        gaussianBlur?.setValue(image, forKey: kCIInputImageKey)
-        //设置模糊参数
-        gaussianBlur?.setValue(NSNumber(value:radius), forKey: kCIInputRadiusKey)
+        let image = CIImage(image: self)!
         
-        //得到处理后的图片
-        if let resultImage = gaussianBlur?.outputImage {
-            return UIImage(ciImage: resultImage)
+        let gradientBlur = CIFilter(name:"CILinearGradient")!
+
+        let dark = CIFilter(name: "CIDarkenBlendMode", withInputParameters: ["inputImage" : gradientBlur.outputImage!, "inputBackgroundImage":image])!
+        
+        let context = CIContext(options: nil)
+        
+        if let cgImage = context.createCGImage(dark.outputImage!, from: image.extent) {
+            let resultImage = UIImage.init(cgImage: cgImage, scale: self.scale, orientation: self.imageOrientation)
+            return resultImage
         }
         return nil
     }
     
     func maskedVariableBlur(radius: Float) -> UIImage? {
         let blurFilter = GPUImageGaussianBlurPositionFilter();
-        blurFilter.blurRadius = 10;
+        blurFilter.blurRadius = CGFloat(radius);
         blurFilter.blurSize = 0.1
         let blurredImage = blurFilter.image(byFilteringImage: self)
-        
+
         return blurredImage;
     }
 }
