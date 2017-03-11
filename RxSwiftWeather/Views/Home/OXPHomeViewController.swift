@@ -33,17 +33,15 @@ class OXPHomeViewController: OXPBaseViewController {
         scrollView.backgroundColor = UIColor.clear
         superView.addSubview(scrollView)
         scrollView.snp.makeConstraints { (maker) in
-            maker.right.left.equalTo(superView)
-            maker.top.equalTo(self.view.snp.top)
-            maker.bottom.equalTo(self.view.snp.bottom)
+            maker.edges.equalTo(self.view)
         }
         
         scrollView.addSubview(contentView)
         contentView.snp.makeConstraints { (maker) in
-            maker.top.equalTo(scrollView.snp.top)
+            maker.top.equalTo(scrollView.snp.top).offset(-64+(1/UIScreen.main.scale))
             maker.left.right.equalTo(scrollView)
             //状态栏高度为20导航栏高度为44
-            maker.size.equalTo(CGSize.init(width: self.view.bounds.size.width, height: self.view.bounds.size.height-64))
+            maker.height.equalTo(self.view.bounds.size.height-64)
             maker.size.bottom.equalTo(scrollView)
         }
         
