@@ -18,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
+        
+        importCities2Database()
+        
         window?.rootViewController = OXPRootViewController()
         window?.makeKeyAndVisible()
         return true
@@ -45,6 +48,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func importCities2Database() {
+        let path = Bundle.main.bundlePath.appending("/ThinkpageCities.plist")
+        let dict = NSDictionary.init(contentsOfFile: path)
+        print(dict)
+    }
 }
 
