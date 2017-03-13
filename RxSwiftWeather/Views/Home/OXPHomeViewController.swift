@@ -38,10 +38,10 @@ class OXPHomeViewController: OXPBaseViewController {
         
         scrollView.addSubview(contentView)
         contentView.snp.makeConstraints { (maker) in
-            maker.top.equalTo(scrollView.snp.top).offset(-64+(1/UIScreen.main.scale))
+            maker.top.equalTo(scrollView.snp.top).offset(-64+1*(1/UIScreen.main.scale))
             maker.left.right.equalTo(scrollView)
             //状态栏高度为20导航栏高度为44
-            maker.height.equalTo(self.view.bounds.size.height-64)
+            maker.height.equalTo(self.view.bounds.size.height)
             maker.size.bottom.equalTo(scrollView)
         }
         

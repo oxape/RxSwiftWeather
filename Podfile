@@ -11,7 +11,7 @@ target 'RxSwiftWeather' do
   pod 'RxCocoa', '~> 3.0'
   pod 'RxOptional', '~> 3.1'
   pod 'RxSwiftUtilities', '~> 1.0.1'
-  
+  pod 'RxDataSources'
   #Layout
   pod 'SnapKit'
   
@@ -23,6 +23,8 @@ target 'RxSwiftWeather' do
   pod 'Moya/RxSwift'
   #Graphics
   pod 'GPUImage'
+  #Database
+  pod 'RealmSwift'
   
   target 'RxSwiftWeatherTests' do
     inherit! :search_paths

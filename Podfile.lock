@@ -19,6 +19,11 @@ PODS:
     - Moya/Core
     - RxSwift (~> 3.0)
   - ObjectMapper (2.2.2)
+  - Realm (2.4.3):
+    - Realm/Headers (= 2.4.3)
+  - Realm/Headers (2.4.3)
+  - RealmSwift (2.4.3):
+    - Realm (= 2.4.3)
   - Result (3.1.0)
   - RxCocoa (3.1.0):
     - RxSwift (~> 3.1)
@@ -37,6 +42,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 1.0.0)
   - Moya-ObjectMapper/RxSwift
   - Moya/RxSwift
+  - RealmSwift
   - RxCocoa (~> 3.0)
   - RxOptional (~> 3.1)
   - RxSwift (~> 3.0)
@@ -51,6 +57,8 @@ SPEC CHECKSUMS:
   Moya: 47f61da5b634aa71f676431b64ee0f81e976296d
   Moya-ObjectMapper: b7f1f44f02b14c97d8a8efe9c6f8e6072252a58c
   ObjectMapper: 9e385c2295bcc4e16eabbcfc85db801442bba545
+  Realm: e08d60b0048ccccd3949c8c28a92c4db5712d7e9
+  RealmSwift: 30d49739ccb3385d201242736ca4dda56aec9dfc
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
   RxCocoa: 50d7564866da9299161e86a263ce12a0873904d8
   RxOptional: b97b59183af80d1e729ac9e51d09a10be668d6a8
@@ -58,6 +66,6 @@ SPEC CHECKSUMS:
   RxSwiftUtilities: 57e77c17b885931c37aa038f114f14fd1f478ac2
   SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
 
-PODFILE CHECKSUM: 9730c1da92e1f172cbb16b79a7fb9ab2d0fdf203
+PODFILE CHECKSUM: e735a7a3e0bc166f439bcd61df6da91554c39d90
 
 COCOAPODS: 1.1.1
