@@ -17,15 +17,15 @@ class OXPBaseViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        createViews()
-        createEvent()
+        setupViews()
+        bindEvents()
     }
 
-    func createViews() {
+    func setupViews() {
         
     }
     
-    func createEvent() {
+    func bindEvents() {
         
     }
 

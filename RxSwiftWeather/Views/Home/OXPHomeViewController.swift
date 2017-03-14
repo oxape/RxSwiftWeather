@@ -25,10 +25,17 @@ class OXPHomeViewController: OXPBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let rightBarItem = UIBarButtonItem.init(title: "+", style: .plain, target: nil, action: nil)
+        self.navigationItem.rightBarButtonItem = rightBarItem
+        rightBarItem.rx.tap.asDriver(onErrorJustReturn: ())
+            .drive(onNext: {
+            [weak self] in
+            self?.navigationController?.pushViewController(OXPCityListViewController(), animated: true)
+        }).addDisposableTo(self.disposeBag)
         self.navigationController?.navigationBar.lt_setElementsAlpha(alpha: 0.6)
     }
 
-    override func createViews() {
+    override func setupViews() {
         let superView = self.view!
         scrollView.backgroundColor = UIColor.clear
         superView.addSubview(scrollView)
@@ -101,7 +108,7 @@ class OXPHomeViewController: OXPBaseViewController {
         scrollView.dg_setPullToRefreshBackgroundColor(scrollView.backgroundColor!)
     }
     
-    override func createEvent() {
+    override func bindEvents() {
         viewModel.weather.drive(weatherLabel.rx.text).addDisposableTo(self.disposeBag)
         viewModel.weatherImage.drive(weatherIcon.rx.image).addDisposableTo(self.disposeBag)
         viewModel.temperature.drive(temperatureLabel.rx.text).addDisposableTo(self.disposeBag)

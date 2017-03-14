@@ -8,11 +8,12 @@
 
 import Foundation
 import RealmSwift
+import RxDataSources
 
 class OXPThinkpageCityModel: Object {
     dynamic var cityID = ""
-    dynamic var zhName = ""
-    dynamic var enName = ""
+    dynamic var zhName = "未知"
+    dynamic var enName = "unkonw"
     dynamic var country = ""
     dynamic var zhArea = ""
     dynamic var enArea = ""
@@ -21,4 +22,19 @@ class OXPThinkpageCityModel: Object {
 //  override static func ignoredProperties() -> [String] {
 //    return []
 //  }
+}
+
+//满足RxDataSources的要求
+extension OXPThinkpageCityModel: IdentifiableType{
+    var identity:String {
+        get {
+            return cityID
+        }
+    }
+}
+
+extension OXPThinkpageCityModel {
+    public static func ==(lhs: OXPThinkpageCityModel, rhs: OXPThinkpageCityModel) -> Bool {
+        return lhs.cityID == rhs.cityID
+    }
 }

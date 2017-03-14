@@ -24,6 +24,7 @@
 		2BBCA9091E4AEA520040962E /* UINavigationBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCA9081E4AEA520040962E /* UINavigationBarExtension.swift */; };
 		2BBCA90C1E4AEB110040962E /* OXPHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCA90B1E4AEB110040962E /* OXPHomeViewController.swift */; };
 		2BBCA90E1E4B1AB60040962E /* OXPBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCA90D1E4B1AB60040962E /* OXPBaseViewController.swift */; };
+		2BC954A81E777929008B414F /* OXPCitiesSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC954A71E777929008B414F /* OXPCitiesSectionModel.swift */; };
 		2BD11DAC1E666A290096DC20 /* CIFilter+OXPExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD11DAB1E666A290096DC20 /* CIFilter+OXPExtension.swift */; };
 		2BE589241E46C883000E479B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE589231E46C883000E479B /* AppDelegate.swift */; };
 		2BE589291E46C883000E479B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BE589271E46C883000E479B /* Main.storyboard */; };
@@ -74,6 +75,7 @@
 		2BBCA9081E4AEA520040962E /* UINavigationBarExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationBarExtension.swift; sourceTree = "<group>"; };
 		2BBCA90B1E4AEB110040962E /* OXPHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPHomeViewController.swift; sourceTree = "<group>"; };
 		2BBCA90D1E4B1AB60040962E /* OXPBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPBaseViewController.swift; sourceTree = "<group>"; };
+		2BC954A71E777929008B414F /* OXPCitiesSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPCitiesSectionModel.swift; sourceTree = "<group>"; };
 		2BD11DAB1E666A290096DC20 /* CIFilter+OXPExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CIFilter+OXPExtension.swift"; sourceTree = "<group>"; };
 		2BE589201E46C883000E479B /* RxSwiftWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxSwiftWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE589231E46C883000E479B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 				2BB40CA31E4C007800DDD447 /* OXPWeatherModel.swift */,
 				2B19404F1E74ED6F003DF01B /* OXPThinkpageCityModel.swift */,
 				2B1940511E74EDAB003DF01B /* OXPTableVersionModel.swift */,
+				2BC954A71E777929008B414F /* OXPCitiesSectionModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				2BBCA9061E4AD1D20040962E /* OXPBaseNavViewController.swift in Sources */,
 				2BB40CAF1E4C16A600DDD447 /* RxOperators.swift in Sources */,
 				2BB40CA81E4C06F400DDD447 /* ThinkpageWeather.swift in Sources */,
+				2BC954A81E777929008B414F /* OXPCitiesSectionModel.swift in Sources */,
 				2BA82F051E65709700E10C65 /* UIImage+OXPExtension.swift in Sources */,
 				2B29E67C1E7451940039A551 /* OXPUtils.swift in Sources */,
 				2BBCA90E1E4B1AB60040962E /* OXPBaseViewController.swift in Sources */,
