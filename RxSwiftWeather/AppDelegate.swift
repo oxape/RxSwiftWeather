@@ -22,7 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = UIColor.white
         
         AppDelegate.importCitiesPlist2Database()
-//        AppDelegate.copyDatabase2Local()
+        AppDelegate.copyDatabase2Local()
+        do {
+           try AppDelegate.migrationDatabase()
+        } catch {
+            AppDelegate.migrationUsingDeleteRealm()
+        }
+        
         window?.rootViewController = OXPRootViewController()
         window?.makeKeyAndVisible()
         return true
@@ -48,6 +54,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    class func migrationUsingDeleteRealm() {
+        var configuration = Realm.Configuration.defaultConfiguration
+        configuration.deleteRealmIfMigrationNeeded = true
+        Realm.Configuration.defaultConfiguration = configuration
+        let _ = try! Realm(configuration: configuration)
+    }
+    
+    class func migrationDatabase() throws {
+        let directory = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
+        
+        let filpath = directory!.appending("/thinkpagecities.realm")
+        var configResource = Realm.Configuration.defaultConfiguration
+        configResource.fileURL = URL(string: filpath)
+        configResource.deleteRealmIfMigrationNeeded = true
+        let realmResource = try! Realm(configuration: configResource)
+        
+        var configuration = Realm.Configuration.defaultConfiguration
+        
+        configuration.schemaVersion = 2;
+        configuration.migrationBlock = { (migration, oldSchemaVersion) in
+            print("migration")
+            migration.enumerateObjects(ofType: OXPThinkpageCityModel.className(), { (oldObject, newObject) in
+                if (oldSchemaVersion < 2) {
+                    guard oldObject != nil else {
+                        return
+                    }
+                    guard newObject != nil else {
+                        return
+                    }
+                    newObject!["country_code"] = oldObject!["country"]
+                    let predicate = NSPredicate(format: "cityID = %@", oldObject!["cityID"] as! String)
+                    let model = realmResource.objects(OXPThinkpageCityModel.self).filter(predicate).first
+                    newObject!["country"] = model?.country ?? ""
+                }
+            })
+        }
+        Realm.Configuration.defaultConfiguration = configuration
+        // 现在我们已经成功更新了架构版本并且提供了迁移闭包，打开旧有的 Realm 数据库会自动执行此数据迁移，然后成功进行访问
+        let _ = try Realm(configuration: configuration)
     }
     
     class func copyDatabase2Local () {
@@ -117,7 +164,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     class func importCities2Database(cities: NSArray, realm: Realm) {
-        //realm.write这种写法快点
+        //在单次事务里执行多次写入,比发起多次事务快很多
         try! realm.write {
             for city in cities {
                 let model = city as! NSDictionary

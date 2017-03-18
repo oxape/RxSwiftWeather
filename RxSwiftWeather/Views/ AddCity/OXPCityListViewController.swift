@@ -118,6 +118,7 @@ extension OXPCityListViewController : UITableViewDelegate {
                 realm.add(thinkpageCityModel)
             }
         }
+        let _ = self.navigationController?.popViewController(animated: true)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
