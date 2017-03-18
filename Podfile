@@ -26,6 +26,8 @@ target 'RxSwiftWeather' do
   #Database
   pod 'RealmSwift'
   pod 'RxRealm'
+  #Tools
+  pod 'DateToolsSwift'
   
   target 'RxSwiftWeatherTests' do
     inherit! :search_paths

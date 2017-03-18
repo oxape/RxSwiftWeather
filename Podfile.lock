@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.3.0)
+  - DateToolsSwift (2.0.2)
   - DGElasticPullToRefresh (1.1)
   - GPUImage (0.1.7)
   - MBProgressHUD (1.0.0)
@@ -43,6 +44,7 @@ PODS:
   - SnapKit (3.1.2)
 
 DEPENDENCIES:
+  - DateToolsSwift
   - DGElasticPullToRefresh
   - GPUImage
   - MBProgressHUD (~> 1.0.0)
@@ -59,6 +61,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  DateToolsSwift: e493a31bc1fb5bc163f27f897c637f789e4a2b5b
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
@@ -76,6 +79,6 @@ SPEC CHECKSUMS:
   RxSwiftUtilities: 57e77c17b885931c37aa038f114f14fd1f478ac2
   SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
 
-PODFILE CHECKSUM: 300da423dfaaf72ddea617eb0315530dbde0e73d
+PODFILE CHECKSUM: 48e1a7e205c477405edf00a651830dd171e261be
 
 COCOAPODS: 1.1.1

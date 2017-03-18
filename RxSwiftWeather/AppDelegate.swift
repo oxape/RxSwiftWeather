@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import DateToolsSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = UIColor.white
         
 //        AppDelegate.importCitiesPlist2Database()
-        
+        AppDelegate.copyDatabase2Local()
         window?.rootViewController = OXPRootViewController()
         window?.makeKeyAndVisible()
         return true
@@ -47,6 +48,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    class func copyDatabase2Local () {
+        guard let path = Bundle.main.path(forResource: "thinkpagecities.realm", ofType: nil) else {
+            print("error")
+            return
+        }
+        print("nomarl")
+        let fileManager = FileManager.default
+        guard let fileAttributtes = try? fileManager.attributesOfItem(atPath: path) else {
+            return
+        }
+        guard let resourceAttributte = fileAttributtes[.modificationDate] else {
+            return
+        }
+        let resourceDate = resourceAttributte as! Date
+        let localDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let localPath = localDirectory.appending("/thinkpagecities.realm")
+        if let localFileAttributtes = try? fileManager.attributesOfItem(atPath: localPath) {
+            if let localAttributte = localFileAttributtes[.modificationDate] {
+                let localDate = localAttributte as! Date
+                if (resourceDate.isLater(than: localDate)) {
+                    try? fileManager.removeItem(atPath: localPath)
+                    try? fileManager.copyItem(atPath: path, toPath: localPath)
+                }
+                return;
+            }
+            try? fileManager.removeItem(atPath: localPath)
+        }
+        try? fileManager.copyItem(atPath: path, toPath: localPath)
     }
 
     class func importCitiesPlist2Database() {
