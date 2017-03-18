@@ -74,7 +74,7 @@ class OXPCityListViewController: OXPBaseViewController {
                 let directory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
                 let path = directory.appending("/thinkpagecities.realm")
                 let realm = try! Realm(fileURL: URL(string: path)!)
-                let predicate = NSPredicate(format: "zhName CONTAINS %@ or enName CONTAINS %@", query, query)
+                let predicate = NSPredicate(format: "zhName CONTAINS[c] %@ or enName CONTAINS[c] %@", query, query)
                 let results = realm.objects(OXPThinkpageCityModel.self).filter(predicate)
                 var cities:[OXPThinkpageCityModel] = []
                 for city in results {
