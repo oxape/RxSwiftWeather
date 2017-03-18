@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
         
-//        AppDelegate.importCitiesPlist2Database()
-        AppDelegate.copyDatabase2Local()
+        AppDelegate.importCitiesPlist2Database()
+//        AppDelegate.copyDatabase2Local()
         window?.rootViewController = OXPRootViewController()
         window?.makeKeyAndVisible()
         return true
@@ -82,16 +82,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     class func importCitiesPlist2Database() {
         let path = Bundle.main.bundlePath.appending("/ThinkpageCities.plist")
+        print(path)
         guard let dict = NSDictionary.init(contentsOfFile: path) else {
             return
         }
         let version = dict["version"] as! String
         let directory = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).first
+        
         let filpath = directory!.appending("/thinkpagecities.realm")
-        let realm = try! Realm(fileURL: URL(string: filpath)!)
-        if let url = realm.configuration.fileURL {
-            print(url)
-        }
+        print(filpath)
+        var configuration = Realm.Configuration.defaultConfiguration
+        configuration.fileURL = URL(string: filpath)
+        configuration.deleteRealmIfMigrationNeeded = true
+        let realm = try! Realm(configuration: configuration)
         if let tableVersion = realm.objects(OXPTableVersionModel.self).filter("name == 'ThinkpageCities'").first {
             if let result = OXPUtils.compareVersion(pversion: version, aversion: tableVersion.version) {
                 if result == .orderedDescending {
@@ -100,6 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         realm.delete(models)
                     }
                     importCities2Database(cities: dict["cities"] as! NSArray, realm: realm)
+                    importTableVersion2Database(table: "ThinkpageCities", version: version, realm: realm);
                 }
             }
         } else {
@@ -108,32 +112,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 realm.delete(models)
             }
             importCities2Database(cities: dict["cities"] as! NSArray, realm: realm)
+            importTableVersion2Database(table: "ThinkpageCities", version: version, realm: realm);
         }
     }
     
     class func importCities2Database(cities: NSArray, realm: Realm) {
-        for city in cities {
-            let model = city as! NSDictionary
-            let cityModel = OXPThinkpageCityModel()
-            
-            cityModel.cityID = model["code"] as! String
-            cityModel.zhName = model["zh_name"]  as! String
-            cityModel.enName = model["en_name"]  as! String
-            cityModel.country = model["country"] as! String
-            cityModel.zhArea = model["zh_area"] as! String
-            cityModel.enArea = model["zh_area"] as! String
-            try! realm.write {
+        //realm.write这种写法快点
+        try! realm.write {
+            for city in cities {
+                let model = city as! NSDictionary
+                let cityModel = OXPThinkpageCityModel()
+                
+                cityModel.cityID = model["code"] as! String
+                cityModel.zhName = model["zh_name"]  as! String
+                cityModel.enName = model["en_name"]  as! String
+                cityModel.country = model["country"] as! String
+                cityModel.country_code = model["country_code"] as! String
+                cityModel.zhArea = model["zh_area"] as! String
+                cityModel.enArea = model["zh_area"] as! String
+                
                 realm.add(cityModel)
             }
         }
     }
     
-    func importTableVersion2Database(table: String, version: String, realm: Realm) {
-        let versionMoel = OXPTableVersionModel()
-        versionMoel.name = table
-        versionMoel.version = version
-        try! realm.write {
-            realm.add(versionMoel)
+    class func importTableVersion2Database(table: String, version: String, realm: Realm) {
+        let versionMoel = realm.objects(OXPTableVersionModel.self).filter("name == 'ThinkpageCities'").first
+        if versionMoel != nil {
+            versionMoel!.version = version
+            try! realm.write {
+                realm.add(versionMoel!, update: true)
+            }
+        }else {
+            let versionMoel = OXPTableVersionModel()
+            versionMoel.name = table
+            versionMoel.version = version
+            try! realm.write {
+                realm.add(versionMoel)
+            }
         }
     }
 }

@@ -15,8 +15,13 @@ class OXPThinkpageCityModel: Object {
     dynamic var zhName = "未知"
     dynamic var enName = "unkonw"
     dynamic var country = ""
+    dynamic var country_code = ""
     dynamic var zhArea = ""
     dynamic var enArea = ""
+    
+    override class func primaryKey() -> String {
+        return "cityID";
+    }
 // Specify properties to ignore (Realm won't persist these)
     
 //  override static func ignoredProperties() -> [String] {

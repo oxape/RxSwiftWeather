@@ -11,9 +11,9 @@
 		2B1940521E74EDAB003DF01B /* OXPTableVersionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1940511E74EDAB003DF01B /* OXPTableVersionModel.swift */; };
 		2B1940561E75535E003DF01B /* OXPCityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1940551E75535E003DF01B /* OXPCityListViewController.swift */; };
 		2B1940571E755656003DF01B /* thinkpagecities.realm in Resources */ = {isa = PBXBuildFile; fileRef = 2B1940531E752EC7003DF01B /* thinkpagecities.realm */; };
-		2B29E6791E7450DD0039A551 /* ThinkpageCities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B29E6781E7450DD0039A551 /* ThinkpageCities.plist */; };
 		2B29E67C1E7451940039A551 /* OXPUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29E67B1E7451940039A551 /* OXPUtils.swift */; };
 		2BA82F051E65709700E10C65 /* UIImage+OXPExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA82F041E65709700E10C65 /* UIImage+OXPExtension.swift */; };
+		2BB408E01E7D10BB00A7F7E9 /* ThinkpageCities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2BB408DF1E7D10BB00A7F7E9 /* ThinkpageCities.plist */; };
 		2BB40CA41E4C007800DDD447 /* OXPWeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB40CA31E4C007800DDD447 /* OXPWeatherModel.swift */; };
 		2BB40CA61E4C060A00DDD447 /* OXPWeatherAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB40CA51E4C060A00DDD447 /* OXPWeatherAPIService.swift */; };
 		2BB40CA81E4C06F400DDD447 /* ThinkpageWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB40CA71E4C06F400DDD447 /* ThinkpageWeather.swift */; };
@@ -62,9 +62,9 @@
 		2B1940511E74EDAB003DF01B /* OXPTableVersionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPTableVersionModel.swift; sourceTree = "<group>"; };
 		2B1940531E752EC7003DF01B /* thinkpagecities.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = thinkpagecities.realm; sourceTree = "<group>"; };
 		2B1940551E75535E003DF01B /* OXPCityListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPCityListViewController.swift; sourceTree = "<group>"; };
-		2B29E6781E7450DD0039A551 /* ThinkpageCities.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = ThinkpageCities.plist; sourceTree = "<group>"; };
 		2B29E67B1E7451940039A551 /* OXPUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPUtils.swift; sourceTree = "<group>"; };
 		2BA82F041E65709700E10C65 /* UIImage+OXPExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+OXPExtension.swift"; sourceTree = "<group>"; };
+		2BB408DF1E7D10BB00A7F7E9 /* ThinkpageCities.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = ThinkpageCities.plist; sourceTree = "<group>"; };
 		2BB40CA31E4C007800DDD447 /* OXPWeatherModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPWeatherModel.swift; sourceTree = "<group>"; };
 		2BB40CA51E4C060A00DDD447 /* OXPWeatherAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPWeatherAPIService.swift; sourceTree = "<group>"; };
 		2BB40CA71E4C06F400DDD447 /* ThinkpageWeather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThinkpageWeather.swift; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				2B1940531E752EC7003DF01B /* thinkpagecities.realm */,
-				2B29E6781E7450DD0039A551 /* ThinkpageCities.plist */,
+				2BB408DF1E7D10BB00A7F7E9 /* ThinkpageCities.plist */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -455,10 +455,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B1940571E755656003DF01B /* thinkpagecities.realm in Resources */,
+				2BB408E01E7D10BB00A7F7E9 /* ThinkpageCities.plist in Resources */,
 				2BE5892E1E46C883000E479B /* LaunchScreen.storyboard in Resources */,
 				2BE5892B1E46C883000E479B /* Assets.xcassets in Resources */,
 				2BE589291E46C883000E479B /* Main.storyboard in Resources */,
-				2B29E6791E7450DD0039A551 /* ThinkpageCities.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -51,6 +51,9 @@ class OXPCityListViewController: OXPBaseViewController {
     }
     
     override func bindEvents() {
+        searchBar.rx.textDidBeginEditing.subscribe({
+            print($0)
+        }).addDisposableTo(disposeBag)
         searchResults = searchBar.rx.text.orEmpty
             .throttle(0.3, scheduler: MainScheduler.instance)
             .distinctUntilChanged()

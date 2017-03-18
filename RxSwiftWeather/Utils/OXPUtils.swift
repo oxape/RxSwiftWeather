@@ -13,7 +13,7 @@ class OXPUtils: NSObject {
         let pcomponents = pversion.components(separatedBy: ".")
         let acomponents = aversion.components(separatedBy: ".")
         var i = 0
-        for _ in 0...pcomponents.count {
+        for _ in 0...pcomponents.count-1 {
             guard let pnum = Int(pcomponents[i]) else {
                 return nil
             }
