@@ -25,6 +25,7 @@
 		2BBCA90C1E4AEB110040962E /* OXPHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCA90B1E4AEB110040962E /* OXPHomeViewController.swift */; };
 		2BBCA90E1E4B1AB60040962E /* OXPBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCA90D1E4B1AB60040962E /* OXPBaseViewController.swift */; };
 		2BC954A81E777929008B414F /* OXPCitiesSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC954A71E777929008B414F /* OXPCitiesSectionModel.swift */; };
+		2BCF3A4A1E7F8803007A7F11 /* OXPSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF3A491E7F8803007A7F11 /* OXPSideMenu.swift */; };
 		2BD11DAC1E666A290096DC20 /* CIFilter+OXPExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD11DAB1E666A290096DC20 /* CIFilter+OXPExtension.swift */; };
 		2BE589241E46C883000E479B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE589231E46C883000E479B /* AppDelegate.swift */; };
 		2BE589291E46C883000E479B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BE589271E46C883000E479B /* Main.storyboard */; };
@@ -76,6 +77,7 @@
 		2BBCA90B1E4AEB110040962E /* OXPHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPHomeViewController.swift; sourceTree = "<group>"; };
 		2BBCA90D1E4B1AB60040962E /* OXPBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPBaseViewController.swift; sourceTree = "<group>"; };
 		2BC954A71E777929008B414F /* OXPCitiesSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPCitiesSectionModel.swift; sourceTree = "<group>"; };
+		2BCF3A491E7F8803007A7F11 /* OXPSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPSideMenu.swift; sourceTree = "<group>"; };
 		2BD11DAB1E666A290096DC20 /* CIFilter+OXPExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CIFilter+OXPExtension.swift"; sourceTree = "<group>"; };
 		2BE589201E46C883000E479B /* RxSwiftWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxSwiftWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE589231E46C883000E479B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
@@ -218,6 +220,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		2BCF3A481E7F87EE007A7F11 /* OXPSideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				2BCF3A491E7F8803007A7F11 /* OXPSideMenu.swift */,
+			);
+			path = OXPSideMenu;
+			sourceTree = "<group>";
+		};
 		2BE589171E46C883000E479B = {
 			isa = PBXGroup;
 			children = (
@@ -281,6 +291,7 @@
 		2BE589511E46CB54000E479B /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				2BCF3A481E7F87EE007A7F11 /* OXPSideMenu */,
 				2BB40CAB1E4C16A600DDD447 /* Rx */,
 				2BBCA9071E4AEA520040962E /* LTNavitgationBar */,
 			);
@@ -622,6 +633,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B1940521E74EDAB003DF01B /* OXPTableVersionModel.swift in Sources */,
+				2BCF3A4A1E7F8803007A7F11 /* OXPSideMenu.swift in Sources */,
 				2BE5895A1E46D0E2000E479B /* OXPRootViewController.swift in Sources */,
 				2BD11DAC1E666A290096DC20 /* CIFilter+OXPExtension.swift in Sources */,
 				2BBCA90C1E4AEB110040962E /* OXPHomeViewController.swift in Sources */,

@@ -28,8 +28,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             AppDelegate.migrationUsingDeleteRealm()
         }
-        
-        window?.rootViewController = OXPRootViewController()
+        let sideMenu = OXPSideMenu()
+        sideMenu.menuViewController = UIViewController()
+        sideMenu.menuViewController?.view.backgroundColor = UIColor.green
+        sideMenu.contentViewController = UIViewController()
+        sideMenu.contentViewController?.view.backgroundColor = UIColor.blue
+
+        window?.rootViewController = sideMenu
         window?.makeKeyAndVisible()
         return true
     }
