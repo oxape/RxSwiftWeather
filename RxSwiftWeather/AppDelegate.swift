@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
         
-        AppDelegate.importCitiesPlist2Database()
+//        AppDelegate.importCitiesPlist2Database()
         AppDelegate.copyDatabase2Local()
         do {
            try AppDelegate.migrationDatabase()
