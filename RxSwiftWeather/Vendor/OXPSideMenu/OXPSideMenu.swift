@@ -125,12 +125,12 @@ class OXPSideMenu : UIViewController {
 //            recognizer.isEnabled = false
             if (percent > 0.5) {
                 self.view.layer.speed = 0
-                self.showMenuViewController(animated: false)
+                self.showMenuViewController(animated: true)
                 self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
                 self.view.layer.speed = 1
             } else {
                 self.view.layer.speed = 0
-                self.hidMenuViewController(animated: false)
+                self.hidMenuViewController(animated: true)
                 self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
                 self.view.layer.speed = 1
             }
