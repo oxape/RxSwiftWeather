@@ -11,14 +11,19 @@ import UIKit
 class OXPSideMenu : UIViewController {
     fileprivate let menuViewContainer = UIView()
     fileprivate let contentViewContainer = UIView()
-    fileprivate let animationDuration = 0.25
-    fileprivate let menuOffsetInContentShow = CGFloat(60)
+    fileprivate let animationDuration:CGFloat = 1.5
+    fileprivate let menuOffsetInContentShow:CGFloat = 60
+    fileprivate var edgeRecognizer:UIScreenEdgePanGestureRecognizer!
+    fileprivate var startPoint = CGPoint(x: 0, y: 0)
+    fileprivate var percent:CGFloat = 0
     var menuShow = false
     var menuViewController:UIViewController? {
-        didSet {
-            if oldValue != nil {
-                self.hideViewController(viewController: oldValue!)
+        willSet {
+            if menuViewController != nil {
+                self.hideViewController(viewController: menuViewController!)
             }
+        }
+        didSet {
             if menuViewController != nil {
                 let menu = menuViewController!
                 self.addChildViewController(menu)
@@ -27,27 +32,32 @@ class OXPSideMenu : UIViewController {
                 menu.view.autoresizingMask = UIViewAutoresizing.flexibleWidth.union(.flexibleHeight)
                 menu.didMove(toParentViewController: self)
             }
+            self.view.setNeedsUpdateConstraints()
         }
     }
     var contentViewController:UIViewController? {
-        didSet {
-            if oldValue != nil {
-                self.hideViewController(viewController: oldValue!)
+        willSet {
+            if contentViewController != nil {
+                self.hideViewController(viewController: contentViewController!)
             }
+        }
+        didSet {
             if contentViewController != nil {
                 let content = contentViewController!
                 self.addChildViewController(content)
                 contentViewContainer.addSubview(content.view)
-                content.view.frame = menuViewContainer.frame
+                content.view.frame = contentViewContainer.frame
                 content.view.autoresizingMask = UIViewAutoresizing.flexibleWidth.union(.flexibleHeight)
                 content.didMove(toParentViewController: self)
             }
+            self.view.setNeedsUpdateConstraints()
         }
     }
     var constraints = Array<NSLayoutConstraint>()
     
     init() {
         //self init
+        
         super.init(nibName: nil, bundle: nil)
         //custom init
     }
@@ -58,16 +68,21 @@ class OXPSideMenu : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.menuViewContainer.translatesAutoresizingMaskIntoConstraints = false;
+        self.contentViewContainer.translatesAutoresizingMaskIntoConstraints = false;
         self.view.addSubview(menuViewContainer)
         self.view.addSubview(contentViewContainer)
-        let recognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(screenEdgePanGesture(recognizer:)))
-        self.view.addGestureRecognizer(recognizer)
+        
+        edgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(OXPSideMenu.screenEdgePanGesture(recognizer:)))
+        edgeRecognizer.edges = .left
+        self.view.isUserInteractionEnabled = true
+        self.view.addGestureRecognizer(edgeRecognizer)
         self.view.setNeedsUpdateConstraints()
     }
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
-        
+        self.view.removeConstraints(constraints)
         constraints.removeAll()
         constraints.append(contentsOf: NSLayoutConstraint.constraints(withVisualFormat: "V:|[menu]|", options:[], metrics: nil, views: ["menu": menuViewContainer]))
         constraints.append(NSLayoutConstraint.init(item: menuViewContainer, attribute: .left, relatedBy: .equal, toItem: self.view, attribute: .left, multiplier: 1.0, constant: 0.0))
@@ -80,11 +95,96 @@ class OXPSideMenu : UIViewController {
         } else {
             constraints.append(NSLayoutConstraint.init(item: contentViewContainer, attribute: .left, relatedBy: .equal, toItem: self.view, attribute: .left, multiplier: 1.0, constant: 0.0))
         }
+        self.view.addConstraints(constraints)
     }
     
     func screenEdgePanGesture(recognizer: UIScreenEdgePanGestureRecognizer) {
-        if recognizer.edges == .left {
-            NSLog("%@", NSStringFromCGPoint(recognizer.translation(in: self.view)))
+        NSLog("%@", NSStringFromCGPoint(recognizer.translation(in: recognizer.view)))
+        if (recognizer.state == .began) {
+            startPoint = recognizer.translation(in: recognizer.view)
+            menuShow = true
+            self.view.layer.speed = 0
+            self.view.layer.timeOffset = 0
+            UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
+                self.view.setNeedsUpdateConstraints()
+                self.view.layoutIfNeeded()
+            })
+        } else if (recognizer.state == .changed) {
+            let point = recognizer.translation(in: recognizer.view)
+            let distance = point.x-startPoint.x
+            if distance < 0 {
+                percent = 0
+            } else {
+                percent = distance/((recognizer.view?.bounds.size.width )! - menuOffsetInContentShow)
+            }
+            self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
+        } else if (recognizer.state == .ended || recognizer.state == .cancelled || recognizer.state == .failed) {
+//            let displayLink = CADisplayLink(target: self, selector: #selector(OXPSideMenu.displayLinkTick(link:)))
+//            displayLink.isPaused = false
+//            displayLink.add(to: RunLoop.main, forMode: .commonModes)
+//            recognizer.isEnabled = false
+            if (percent > 0.5) {
+                self.view.layer.speed = 0
+                self.showMenuViewController(animated: false)
+                self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
+                self.view.layer.speed = 1
+            } else {
+                self.view.layer.speed = 0
+                self.hidMenuViewController(animated: false)
+                self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
+                self.view.layer.speed = 1
+            }
+        }
+    }
+    
+    func displayLinkTick(link: CADisplayLink) {
+        if (percent > 0.5) {
+            self.view.layer.timeOffset += link.duration
+        } else {
+            self.view.layer.timeOffset -= link.duration
+        }
+        if (self.view.layer.timeOffset < 0) {
+            self.view.layer.timeOffset = 0
+            link.invalidate()
+            self.view.layer.speed = 1
+            self.hidMenuViewController(animated: false)
+        } else if (self.view.layer.timeOffset > CFTimeInterval(animationDuration)) {
+            self.view.layer.timeOffset = CFTimeInterval(animationDuration)
+            link.invalidate()
+            self.view.layer.speed = 1
+            self.showMenuViewController(animated: false)
+        }
+    }
+    
+    func showMenuViewController(animated: Bool) {
+        menuShow = true
+        if animated {
+            UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
+                self.view.setNeedsUpdateConstraints()
+                self.view.layoutIfNeeded()
+            }) { _ in
+                self.edgeRecognizer.isEnabled = false
+            }
+        } else {
+            self.view.setNeedsUpdateConstraints()
+            self.view.layoutIfNeeded()
+            self.edgeRecognizer.isEnabled = false
+        }
+    }
+    
+    func hidMenuViewController(animated: Bool) {
+        menuShow = false
+        if animated {
+            UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
+                self.view.setNeedsUpdateConstraints()
+                self.view.layoutIfNeeded()
+            }) { _ in
+                self.edgeRecognizer.isEnabled = true
+            }
+        } else {
+            self.view.setNeedsUpdateConstraints()
+            self.view.layoutIfNeeded()
+            self.edgeRecognizer.isEnabled = true
         }
     }
 
@@ -92,6 +192,16 @@ class OXPSideMenu : UIViewController {
         viewController.willMove(toParentViewController: nil)
         viewController.view.removeFromSuperview()
         viewController.removeFromParentViewController()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        menuShow = false
+        UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
+            self.view.setNeedsUpdateConstraints()
+            self.view.layoutIfNeeded()
+        }) { _ in
+            self.edgeRecognizer.isEnabled = true
+        }
     }
 }
 
