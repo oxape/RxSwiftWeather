@@ -9,5 +9,10 @@
 import UIKit
 
 extension CGFloat {
-    
+    var cfTimeInterval:CFTimeInterval {
+        return CFTimeInterval(self)
+    }
+    var timeInterval:TimeInterval {
+        return TimeInterval(self)
+    }
 }

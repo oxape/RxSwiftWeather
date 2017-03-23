@@ -11,9 +11,12 @@ import UIKit
 class OXPSideMenu : UIViewController {
     fileprivate let menuViewContainer = UIView()
     fileprivate let contentViewContainer = UIView()
-    fileprivate let animationDuration:CGFloat = 1.5
-    fileprivate let menuOffsetInContentShow:CGFloat = 60
+    fileprivate let animationDuration:CGFloat = 0.25
+    fileprivate var menuOffsetInContentShow:CGFloat {
+        return self.view.bounds.size.width * 0.25
+    }
     fileprivate var edgeRecognizer:UIScreenEdgePanGestureRecognizer!
+    fileprivate var pagRecognizer:UIPanGestureRecognizer!
     fileprivate var startPoint = CGPoint(x: 0, y: 0)
     fileprivate var percent:CGFloat = 0
     var menuShow = false
@@ -77,6 +80,11 @@ class OXPSideMenu : UIViewController {
         edgeRecognizer.edges = .left
         self.view.isUserInteractionEnabled = true
         self.view.addGestureRecognizer(edgeRecognizer)
+        
+        pagRecognizer = UIPanGestureRecognizer(target: self, action: #selector(OXPSideMenu.panGesture(recognizer:)))
+        self.contentViewContainer.isUserInteractionEnabled = true
+        self.contentViewContainer.addGestureRecognizer(pagRecognizer)
+        pagRecognizer.isEnabled = false
         self.view.setNeedsUpdateConstraints()
     }
     
@@ -86,7 +94,7 @@ class OXPSideMenu : UIViewController {
         constraints.removeAll()
         constraints.append(contentsOf: NSLayoutConstraint.constraints(withVisualFormat: "V:|[menu]|", options:[], metrics: nil, views: ["menu": menuViewContainer]))
         constraints.append(NSLayoutConstraint.init(item: menuViewContainer, attribute: .left, relatedBy: .equal, toItem: self.view, attribute: .left, multiplier: 1.0, constant: 0.0))
-        constraints.append(NSLayoutConstraint.init(item: menuViewContainer, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1.0, constant: -menuOffsetInContentShow))
+        constraints.append(NSLayoutConstraint.init(item: menuViewContainer, attribute: .width, relatedBy: .equal, toItem: self.view, attribute: .width, multiplier: 0.75, constant: 0))
         
         constraints.append(contentsOf: NSLayoutConstraint.constraints(withVisualFormat: "V:|[content]|", options:[], metrics: nil, views: ["content": contentViewContainer]))
         constraints.append(NSLayoutConstraint.init(item: contentViewContainer, attribute: .width, relatedBy: .equal, toItem: self.view, attribute: .width, multiplier: 1.0, constant: 0.0))
@@ -119,26 +127,15 @@ class OXPSideMenu : UIViewController {
             }
             self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
         } else if (recognizer.state == .ended || recognizer.state == .cancelled || recognizer.state == .failed) {
-//            let displayLink = CADisplayLink(target: self, selector: #selector(OXPSideMenu.displayLinkTick(link:)))
-//            displayLink.isPaused = false
-//            displayLink.add(to: RunLoop.main, forMode: .commonModes)
-//            recognizer.isEnabled = false
-            if (percent > 0.5) {
-                self.view.layer.speed = 0
-                self.showMenuViewController(animated: true)
-                self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
-                self.view.layer.speed = 1
-            } else {
-                self.view.layer.speed = 0
-                self.hidMenuViewController(animated: true)
-                self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
-                self.view.layer.speed = 1
-            }
+            let displayLink = CADisplayLink(target: self, selector: #selector(OXPSideMenu.edgeDisplayLinkTick(link:)))
+            displayLink.isPaused = false
+            displayLink.add(to: RunLoop.main, forMode: .commonModes)
+            recognizer.isEnabled = false
         }
     }
     
-    func displayLinkTick(link: CADisplayLink) {
-        if (percent > 0.5) {
+    func edgeDisplayLinkTick(link: CADisplayLink) {
+        if (percent > 0.3) {
             self.view.layer.timeOffset += link.duration
         } else {
             self.view.layer.timeOffset -= link.duration
@@ -156,6 +153,53 @@ class OXPSideMenu : UIViewController {
         }
     }
     
+    func panGesture(recognizer: UIScreenEdgePanGestureRecognizer) {
+        NSLog("%@", NSStringFromCGPoint(recognizer.translation(in: recognizer.view)))
+        if (recognizer.state == .began) {
+            startPoint = recognizer.translation(in: recognizer.view)
+            menuShow = false
+            self.view.layer.speed = 0
+            self.view.layer.timeOffset = 0
+            UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
+                self.view.setNeedsUpdateConstraints()
+                self.view.layoutIfNeeded()
+            })
+        } else if (recognizer.state == .changed) {
+            let point = recognizer.translation(in: recognizer.view)
+            let distance = -(point.x-startPoint.x)
+            if distance < 0 {
+                percent = 0
+            } else {
+                percent = distance/((recognizer.view?.bounds.size.width )! - abs(startPoint.x))
+            }
+            self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
+        } else if (recognizer.state == .ended || recognizer.state == .cancelled || recognizer.state == .failed) {
+            let displayLink = CADisplayLink(target: self, selector: #selector(OXPSideMenu.panDisplayLinkTick(link:)))
+            displayLink.isPaused = false
+            displayLink.add(to: RunLoop.main, forMode: .commonModes)
+            recognizer.isEnabled = false
+        }
+    }
+    
+    func panDisplayLinkTick(link: CADisplayLink) {
+        if (percent > 0.3) {
+            self.view.layer.timeOffset += link.duration
+        } else {
+            self.view.layer.timeOffset -= link.duration
+        }
+        if (self.view.layer.timeOffset < 0) {
+            self.view.layer.timeOffset = 0
+            link.invalidate()
+            self.view.layer.speed = 1
+            self.showMenuViewController(animated: false)
+        } else if (self.view.layer.timeOffset > CFTimeInterval(animationDuration)) {
+            self.view.layer.timeOffset = CFTimeInterval(animationDuration)
+            link.invalidate()
+            self.view.layer.speed = 1
+            self.hidMenuViewController(animated: false)
+        }
+    }
+    
     func showMenuViewController(animated: Bool) {
         menuShow = true
         if animated {
@@ -163,11 +207,13 @@ class OXPSideMenu : UIViewController {
                 self.view.setNeedsUpdateConstraints()
                 self.view.layoutIfNeeded()
             }) { _ in
+                self.pagRecognizer.isEnabled = true
                 self.edgeRecognizer.isEnabled = false
             }
         } else {
             self.view.setNeedsUpdateConstraints()
             self.view.layoutIfNeeded()
+            self.pagRecognizer.isEnabled = true
             self.edgeRecognizer.isEnabled = false
         }
     }
@@ -179,11 +225,13 @@ class OXPSideMenu : UIViewController {
                 self.view.setNeedsUpdateConstraints()
                 self.view.layoutIfNeeded()
             }) { _ in
+                self.pagRecognizer.isEnabled = false
                 self.edgeRecognizer.isEnabled = true
             }
         } else {
             self.view.setNeedsUpdateConstraints()
             self.view.layoutIfNeeded()
+            self.pagRecognizer.isEnabled = false
             self.edgeRecognizer.isEnabled = true
         }
     }
@@ -192,16 +240,6 @@ class OXPSideMenu : UIViewController {
         viewController.willMove(toParentViewController: nil)
         viewController.view.removeFromSuperview()
         viewController.removeFromParentViewController()
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        menuShow = false
-        UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
-            self.view.setNeedsUpdateConstraints()
-            self.view.layoutIfNeeded()
-        }) { _ in
-            self.edgeRecognizer.isEnabled = true
-        }
     }
 }
 
