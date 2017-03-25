@@ -8,6 +8,12 @@
 
 import UIKit
 
+extension OXPSideMenu {
+    var sideMenu:OXPSideMenu? {
+        return nil
+    }
+}
+
 extension CGFloat {
     var cfTimeInterval:CFTimeInterval {
         return CFTimeInterval(self)
