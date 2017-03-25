@@ -114,10 +114,10 @@ class OXPSideMenu : UIViewController {
             menuShow = true
             self.view.layer.speed = 0
             self.view.layer.timeOffset = 0
-            UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
+            UIView.animate(withDuration: TimeInterval(animationDuration), delay: 0, options: .curveLinear, animations: {
                 self.view.setNeedsUpdateConstraints()
                 self.view.layoutIfNeeded()
-            })
+            }, completion: nil)
         } else if (recognizer.state == .changed) {
             let point = recognizer.translation(in: recognizer.view)
             let distance = point.x-startPoint.x
@@ -144,10 +144,10 @@ class OXPSideMenu : UIViewController {
             menuShow = false
             self.view.layer.speed = 0
             self.view.layer.timeOffset = 0
-            UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
+            UIView.animate(withDuration: TimeInterval(animationDuration), delay: 0, options: .curveLinear, animations: {
                 self.view.setNeedsUpdateConstraints()
                 self.view.layoutIfNeeded()
-            })
+            }, completion: nil)
         } else if (recognizer.state == .changed) {
             let point = recognizer.translation(in: recognizer.view)
             let distance = -(point.x-startPoint.x)
