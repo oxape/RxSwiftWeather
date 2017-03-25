@@ -191,14 +191,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     class func importTableVersion2Database(table: String, version: String, realm: Realm) {
         let versionMoel = realm.objects(OXPTableVersionModel.self).filter("name == 'ThinkpageCities'").first
         if versionMoel != nil {
-            versionMoel!.version = version
             try! realm.write {
+                versionMoel!.version = version
                 realm.add(versionMoel!, update: true)
             }
         }else {
             let versionMoel = OXPTableVersionModel()
             versionMoel.name = table
             versionMoel.version = version
+            versionMoel.uuid = UUID().uuidString
             try! realm.write {
                 realm.add(versionMoel)
             }
