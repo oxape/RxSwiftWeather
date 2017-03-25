@@ -107,10 +107,9 @@ class OXPSideMenu : UIViewController {
     }
     
     func screenEdgePanGesture(recognizer: UIScreenEdgePanGestureRecognizer) {
-        NSLog("%@", NSStringFromCGPoint(recognizer.translation(in: recognizer.view)))
         if (recognizer.state == .began) {
             NSLog("start")
-            startPoint = recognizer.translation(in: recognizer.view)
+            startPoint = recognizer.location(in: self.view)
             menuShow = true
             self.view.layer.speed = 0
             self.view.layer.timeOffset = 0
@@ -119,12 +118,10 @@ class OXPSideMenu : UIViewController {
                 self.view.layoutIfNeeded()
             }, completion: nil)
         } else if (recognizer.state == .changed) {
-            let point = recognizer.translation(in: recognizer.view)
-            let distance = point.x-startPoint.x
-            if distance < 0 {
+            let point = recognizer.location(in: self.view)
+            percent = abs(point.x-startPoint.x)/abs(self.view.bounds.size.width - menuOffsetInContentShow - abs(startPoint.x))
+            if point.x < startPoint.x {
                 percent = 0
-            } else {
-                percent = distance/((recognizer.view?.bounds.size.width )! - menuOffsetInContentShow)
             }
             print("percent = \(percent)")
             self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
@@ -137,10 +134,9 @@ class OXPSideMenu : UIViewController {
     }
     
     func panGesture(recognizer: UIScreenEdgePanGestureRecognizer) {
-        NSLog("%@", NSStringFromCGPoint(recognizer.translation(in: recognizer.view)))
         if (recognizer.state == .began) {
             NSLog("start")
-            startPoint = recognizer.translation(in: recognizer.view)
+            startPoint = recognizer.location(in: self.view)
             menuShow = false
             self.view.layer.speed = 0
             self.view.layer.timeOffset = 0
@@ -149,12 +145,10 @@ class OXPSideMenu : UIViewController {
                 self.view.layoutIfNeeded()
             }, completion: nil)
         } else if (recognizer.state == .changed) {
-            let point = recognizer.translation(in: recognizer.view)
-            let distance = -(point.x-startPoint.x)
-            if distance < 0 {
+            let point = recognizer.location(in: self.view)
+            percent = abs(point.x-startPoint.x)/abs(startPoint.x)
+            if (point.x > startPoint.x) {
                 percent = 0
-            } else {
-                percent = distance/((recognizer.view?.bounds.size.width )! - abs(startPoint.x))
             }
             print("percent = \(percent)")
             self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
