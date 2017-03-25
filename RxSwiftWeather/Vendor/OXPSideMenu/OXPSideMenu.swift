@@ -108,7 +108,6 @@ class OXPSideMenu : UIViewController {
     
     func screenEdgePanGesture(recognizer: UIScreenEdgePanGestureRecognizer) {
         if (recognizer.state == .began) {
-            NSLog("start")
             startPoint = recognizer.location(in: self.view)
             menuShow = true
             self.view.layer.speed = 0
@@ -123,7 +122,6 @@ class OXPSideMenu : UIViewController {
             if point.x < startPoint.x {
                 percent = 0
             }
-            print("percent = \(percent)")
             self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
         } else if (recognizer.state == .ended || recognizer.state == .cancelled || recognizer.state == .failed) {
             let displayLink = CADisplayLink(target: self, selector: #selector(OXPSideMenu.edgeDisplayLinkTick(link:)))
@@ -135,7 +133,6 @@ class OXPSideMenu : UIViewController {
     
     func panGesture(recognizer: UIScreenEdgePanGestureRecognizer) {
         if (recognizer.state == .began) {
-            NSLog("start")
             startPoint = recognizer.location(in: self.view)
             menuShow = false
             self.view.layer.speed = 0
@@ -150,7 +147,6 @@ class OXPSideMenu : UIViewController {
             if (point.x > startPoint.x) {
                 percent = 0
             }
-            print("percent = \(percent)")
             self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
         } else if (recognizer.state == .ended || recognizer.state == .cancelled || recognizer.state == .failed) {
             let displayLink = CADisplayLink(target: self, selector: #selector(OXPSideMenu.panDisplayLinkTick(link:)))
