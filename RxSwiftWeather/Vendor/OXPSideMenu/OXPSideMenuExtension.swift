@@ -8,9 +8,13 @@
 
 import UIKit
 
-extension OXPSideMenu {
+extension UIViewController {
     var sideMenu:OXPSideMenu? {
-        return nil
+        var viewCtl = self
+        while viewCtl?.isKind(of: OXPSideMenu) {
+            viewCtl = viewCtl.parent
+        }
+        return viewCtl
     }
 }
 
