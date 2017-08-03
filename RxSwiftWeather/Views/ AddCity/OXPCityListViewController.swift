@@ -22,6 +22,7 @@ class OXPCityListViewController: OXPBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        searchBar.showsCancelButton = true
         self.view.backgroundColor = UIColor.white
         self.navigationItem.titleView = searchBar
         let realm = try! Realm()
@@ -47,7 +48,6 @@ class OXPCityListViewController: OXPBaseViewController {
             
             return cell
         }
-        tableView.rx.setDelegate(self).addDisposableTo(disposeBag)
     }
     
     override func bindEvents() {
@@ -67,6 +67,11 @@ class OXPCityListViewController: OXPBaseViewController {
                 [OXPCitiesSectionModel.init(items: cities)]
             }).observeOn(MainScheduler.instance).shareReplay(1)
         searchResults!.bindTo(tableView.rx.items(dataSource: dataSource)).addDisposableTo(disposeBag)
+        
+        searchBar.rx.cancelButtonClicked.asDriver().drive(onNext: {
+            [weak self] in
+            self?.dismiss(animated: true, completion: nil)
+        }).addDisposableTo(self.disposeBag)
     }
     //TODO 转换成ViewModel
     func queryCities(query: String) -> Observable<[OXPThinkpageCityModel]> {

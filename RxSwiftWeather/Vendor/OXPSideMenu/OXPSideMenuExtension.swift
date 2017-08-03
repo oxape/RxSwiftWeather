@@ -11,10 +11,10 @@ import UIKit
 extension UIViewController {
     var sideMenu:OXPSideMenu? {
         var viewCtl = self
-        while viewCtl?.isKind(of: OXPSideMenu) {
-            viewCtl = viewCtl.parent
+        while viewCtl.isKind(of: OXPSideMenu.self) {
+            viewCtl = viewCtl.parent!
         }
-        return viewCtl
+        return viewCtl as? OXPSideMenu
     }
 }
 

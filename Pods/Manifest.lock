@@ -1,31 +1,53 @@
 PODS:
-  - Alamofire (4.3.0)
+  - Alamofire (4.5.0)
   - DateToolsSwift (2.0.2)
   - DGElasticPullToRefresh (1.1)
+  - FontAwesomeKit (2.2.1):
+    - FontAwesomeKit/Core (= 2.2.1)
+    - FontAwesomeKit/FontAwesome (= 2.2.1)
+    - FontAwesomeKit/FoundationIcons (= 2.2.1)
+    - FontAwesomeKit/IonIcons (= 2.2.1)
+    - FontAwesomeKit/Material (= 2.2.1)
+    - FontAwesomeKit/Octicons (= 2.2.1)
+    - FontAwesomeKit/Zocial (= 2.2.1)
+  - FontAwesomeKit/Core (2.2.1)
+  - FontAwesomeKit/FontAwesome (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/FoundationIcons (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/IonIcons (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/Material (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/Octicons (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/Zocial (2.2.1):
+    - FontAwesomeKit/Core
   - GPUImage (0.1.7)
   - MBProgressHUD (1.0.0)
-  - Moya (8.0.2):
-    - Moya/Core (= 8.0.2)
-  - Moya-ObjectMapper/Core (2.3):
-    - Moya (>= 8.0.0)
-    - ObjectMapper (= 2.2.2)
-  - Moya-ObjectMapper/RxSwift (2.3):
+  - Moya (8.0.5):
+    - Moya/Core (= 8.0.5)
+  - Moya-ObjectMapper/Core (2.3.2):
+    - Moya (~> 8.0)
+    - ObjectMapper (~> 2.2)
+  - Moya-ObjectMapper/RxSwift (2.3.2):
     - Moya-ObjectMapper/Core
     - Moya/RxSwift
-    - RxSwift (= 3.1.0)
-  - Moya/Core (8.0.2):
+    - RxSwift (~> 3.1)
+  - Moya/Core (8.0.5):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
-  - Moya/RxSwift (8.0.2):
+  - Moya/RxSwift (8.0.5):
     - Moya/Core
     - RxSwift (~> 3.0)
-  - ObjectMapper (2.2.2)
+  - ObjectMapper (2.2.7)
   - Realm (2.4.3):
     - Realm/Headers (= 2.4.3)
   - Realm/Headers (2.4.3)
   - RealmSwift (2.4.3):
     - Realm (= 2.4.3)
-  - Result (3.1.0)
+  - Result (3.2.3)
+  - Reveal-SDK (4)
   - RxCocoa (3.1.0):
     - RxSwift (~> 3.1)
   - RxDataSources (1.0.3):
@@ -46,11 +68,13 @@ PODS:
 DEPENDENCIES:
   - DateToolsSwift
   - DGElasticPullToRefresh
+  - FontAwesomeKit (~> 2.2.0)
   - GPUImage
   - MBProgressHUD (~> 1.0.0)
-  - Moya-ObjectMapper/RxSwift
-  - Moya/RxSwift
+  - Moya-ObjectMapper/RxSwift (~> 2.3.2)
+  - Moya/RxSwift (~> 8.0.5)
   - RealmSwift
+  - Reveal-SDK (~> 4)
   - RxCocoa (~> 3.0)
   - RxDataSources
   - RxOptional (~> 3.1)
@@ -60,17 +84,19 @@ DEPENDENCIES:
   - SnapKit
 
 SPEC CHECKSUMS:
-  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   DateToolsSwift: e493a31bc1fb5bc163f27f897c637f789e4a2b5b
   DGElasticPullToRefresh: 28f11a6026302a90f8ffebbc6e24748e584dddd3
+  FontAwesomeKit: 3614979b3dbb0ec3f7fac1bd760b91f66c31db67
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
-  Moya: 47f61da5b634aa71f676431b64ee0f81e976296d
-  Moya-ObjectMapper: b7f1f44f02b14c97d8a8efe9c6f8e6072252a58c
-  ObjectMapper: 9e385c2295bcc4e16eabbcfc85db801442bba545
+  Moya: c37eec09a098ba9991b5a963b291fc5704bdb9ef
+  Moya-ObjectMapper: 1b05f10bb69fb6c8750d497d2974c1c63c08c3a9
+  ObjectMapper: 65abcfd9a61cf7396cbd14a4fb22fddfcc46577e
   Realm: e08d60b0048ccccd3949c8c28a92c4db5712d7e9
   RealmSwift: 30d49739ccb3385d201242736ca4dda56aec9dfc
-  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
+  Reveal-SDK: 178c927f1a3230648d3a92b96f6e730a35b2750a
   RxCocoa: 50d7564866da9299161e86a263ce12a0873904d8
   RxDataSources: a021a0e944ba5f7991259829d973afdbfa719c0b
   RxOptional: b97b59183af80d1e729ac9e51d09a10be668d6a8
@@ -79,6 +105,6 @@ SPEC CHECKSUMS:
   RxSwiftUtilities: 57e77c17b885931c37aa038f114f14fd1f478ac2
   SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
 
-PODFILE CHECKSUM: 48e1a7e205c477405edf00a651830dd171e261be
+PODFILE CHECKSUM: 3851c15869558b9a73ae8aef55988b391fe098b8
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0
