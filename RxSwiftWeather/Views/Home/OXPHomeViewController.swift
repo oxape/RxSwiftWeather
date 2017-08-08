@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import DGElasticPullToRefresh
+import FontAwesomeKit
 
 class OXPHomeViewController: OXPBaseViewController {
 
@@ -25,12 +26,14 @@ class OXPHomeViewController: OXPBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let rightBarItem = UIBarButtonItem.init(title: "+", style: .plain, target: nil, action: nil)
+        let plusIcon = FAKFontAwesome.plusIcon(withSize: 20)
+        plusIcon?.addAttribute(NSForegroundColorAttributeName, value: UIColor.white)
+        let rightBarItem = UIBarButtonItem.init(image: plusIcon?.image(with: CGSize(width: 22, height: 22)), style: .plain, target: nil, action: nil)
         self.navigationItem.rightBarButtonItem = rightBarItem
         rightBarItem.rx.tap.asDriver(onErrorJustReturn: ())
             .drive(onNext: {
             [weak self] in
-            self?.navigationController?.pushViewController(OXPCityListViewController(), animated: true)
+            self?.present(UINavigationController.init(rootViewController: OXPCityListViewController()), animated: true, completion: nil)
         }).addDisposableTo(self.disposeBag)
         self.navigationController?.navigationBar.lt_setElementsAlpha(alpha: 0.6)
     }
@@ -100,7 +103,6 @@ class OXPHomeViewController: OXPBaseViewController {
         loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         scrollView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
             self?.viewModel.refresh()
-            
             self?.scrollView.dg_stopLoading()
             }, loadingView: loadingView)
         scrollView.dg_setPullToRefreshFillColor(UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0))

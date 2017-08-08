@@ -8,14 +8,14 @@
 
 import UIKit
 
-class OXPRootViewController: OXPBaseNavViewController {
+class OXPRootViewController: OXPSideMenu {
 
-    init() {
-        super.init(rootViewController: OXPHomeViewController())
-    }
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    override init() {
+        let menuViewCtl = OXPMenuViewController()
+        let homeViewCtl = OXPBaseNavViewController(rootViewController: OXPHomeViewController())
+        super.init()
+        self.menuViewController = menuViewCtl
+        self.contentViewController = homeViewCtl
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -24,7 +24,5 @@ class OXPRootViewController: OXPBaseNavViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
-
 }

@@ -14,13 +14,12 @@ target 'RxSwiftWeather' do
   pod 'RxDataSources'
   #Layout
   pod 'SnapKit'
-  
   #UI Control
   pod 'MBProgressHUD', '~> 1.0.0'
   pod 'DGElasticPullToRefresh'
   #Network
-  pod 'Moya-ObjectMapper/RxSwift'
-  pod 'Moya/RxSwift'
+  pod 'Moya-ObjectMapper/RxSwift', '~> 2.3.2'
+  pod 'Moya/RxSwift', '~> 8.0.5'
   #Graphics
   pod 'GPUImage'
   #Database
@@ -28,7 +27,10 @@ target 'RxSwiftWeather' do
   pod 'RxRealm'
   #Tools
   pod 'DateToolsSwift'
-  
+  #Font Icon
+  pod 'FontAwesomeKit', '~> 2.2.0'
+  #Reveal
+  pod 'Reveal-SDK','~>4', :configurations => ['Debug']
   target 'RxSwiftWeatherTests' do
     inherit! :search_paths
     # Pods for testing

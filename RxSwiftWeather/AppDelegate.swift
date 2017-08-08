@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -28,13 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             AppDelegate.migrationUsingDeleteRealm()
         }
-        let sideMenu = OXPSideMenu()
-        sideMenu.menuViewController = UIViewController()
-        sideMenu.menuViewController?.view.backgroundColor = UIColor.green
-        sideMenu.contentViewController = UIViewController()
-        sideMenu.contentViewController?.view.backgroundColor = UIColor.blue
 
-        window?.rootViewController = sideMenu
+        window?.rootViewController = OXPRootViewController()
         window?.makeKeyAndVisible()
         return true
     }
@@ -191,14 +185,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     class func importTableVersion2Database(table: String, version: String, realm: Realm) {
         let versionMoel = realm.objects(OXPTableVersionModel.self).filter("name == 'ThinkpageCities'").first
         if versionMoel != nil {
-            versionMoel!.version = version
             try! realm.write {
+                versionMoel!.version = version
                 realm.add(versionMoel!, update: true)
             }
         }else {
             let versionMoel = OXPTableVersionModel()
             versionMoel.name = table
             versionMoel.version = version
+            versionMoel.uuid = UUID().uuidString
             try! realm.write {
                 realm.add(versionMoel)
             }

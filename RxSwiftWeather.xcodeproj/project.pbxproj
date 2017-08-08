@@ -11,7 +11,6 @@
 		2B1940501E74ED6F003DF01B /* OXPThinkpageCityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B19404F1E74ED6F003DF01B /* OXPThinkpageCityModel.swift */; };
 		2B1940521E74EDAB003DF01B /* OXPTableVersionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1940511E74EDAB003DF01B /* OXPTableVersionModel.swift */; };
 		2B1940561E75535E003DF01B /* OXPCityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1940551E75535E003DF01B /* OXPCityListViewController.swift */; };
-		2B1940571E755656003DF01B /* thinkpagecities.realm in Resources */ = {isa = PBXBuildFile; fileRef = 2B1940531E752EC7003DF01B /* thinkpagecities.realm */; };
 		2B29E67C1E7451940039A551 /* OXPUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29E67B1E7451940039A551 /* OXPUtils.swift */; };
 		2B7A9C381E81381300007D1E /* Info.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2B7A9C371E81381300007D1E /* Info.strings */; };
 		2BA82F051E65709700E10C65 /* UIImage+OXPExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA82F041E65709700E10C65 /* UIImage+OXPExtension.swift */; };
@@ -27,6 +26,8 @@
 		2BBCA90C1E4AEB110040962E /* OXPHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCA90B1E4AEB110040962E /* OXPHomeViewController.swift */; };
 		2BBCA90E1E4B1AB60040962E /* OXPBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBCA90D1E4B1AB60040962E /* OXPBaseViewController.swift */; };
 		2BC954A81E777929008B414F /* OXPCitiesSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC954A71E777929008B414F /* OXPCitiesSectionModel.swift */; };
+		2BCDAF4A1E86142900AC78B4 /* thinkpagecities.realm in Resources */ = {isa = PBXBuildFile; fileRef = 2BCDAF491E8613D400AC78B4 /* thinkpagecities.realm */; };
+		2BCDAF4D1E86150C00AC78B4 /* OXPMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCDAF4C1E86150C00AC78B4 /* OXPMenuViewController.swift */; };
 		2BCF3A4A1E7F8803007A7F11 /* OXPSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF3A491E7F8803007A7F11 /* OXPSideMenu.swift */; };
 		2BD11DAC1E666A290096DC20 /* CIFilter+OXPExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD11DAB1E666A290096DC20 /* CIFilter+OXPExtension.swift */; };
 		2BE589241E46C883000E479B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE589231E46C883000E479B /* AppDelegate.swift */; };
@@ -64,7 +65,6 @@
 		2B08336A1E826A2800A837DD /* OXPSideMenuExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPSideMenuExtension.swift; sourceTree = "<group>"; };
 		2B19404F1E74ED6F003DF01B /* OXPThinkpageCityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPThinkpageCityModel.swift; sourceTree = "<group>"; };
 		2B1940511E74EDAB003DF01B /* OXPTableVersionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPTableVersionModel.swift; sourceTree = "<group>"; };
-		2B1940531E752EC7003DF01B /* thinkpagecities.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = thinkpagecities.realm; sourceTree = "<group>"; };
 		2B1940551E75535E003DF01B /* OXPCityListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPCityListViewController.swift; sourceTree = "<group>"; };
 		2B29E67B1E7451940039A551 /* OXPUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPUtils.swift; sourceTree = "<group>"; };
 		2B7A9C371E81381300007D1E /* Info.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Info.strings; sourceTree = "<group>"; };
@@ -81,6 +81,8 @@
 		2BBCA90B1E4AEB110040962E /* OXPHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPHomeViewController.swift; sourceTree = "<group>"; };
 		2BBCA90D1E4B1AB60040962E /* OXPBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPBaseViewController.swift; sourceTree = "<group>"; };
 		2BC954A71E777929008B414F /* OXPCitiesSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPCitiesSectionModel.swift; sourceTree = "<group>"; };
+		2BCDAF491E8613D400AC78B4 /* thinkpagecities.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = thinkpagecities.realm; sourceTree = "<group>"; };
+		2BCDAF4C1E86150C00AC78B4 /* OXPMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPMenuViewController.swift; sourceTree = "<group>"; };
 		2BCF3A491E7F8803007A7F11 /* OXPSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPSideMenu.swift; sourceTree = "<group>"; };
 		2BD11DAB1E666A290096DC20 /* CIFilter+OXPExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CIFilter+OXPExtension.swift"; sourceTree = "<group>"; };
 		2BE589201E46C883000E479B /* RxSwiftWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxSwiftWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,7 +169,7 @@
 		2B29E6751E7445CC0039A551 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				2B1940531E752EC7003DF01B /* thinkpagecities.realm */,
+				2BCDAF491E8613D400AC78B4 /* thinkpagecities.realm */,
 				2BB408DF1E7D10BB00A7F7E9 /* ThinkpageCities.plist */,
 			);
 			path = Support;
@@ -222,6 +224,14 @@
 				2BBCA90B1E4AEB110040962E /* OXPHomeViewController.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		2BCDAF4B1E86148400AC78B4 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				2BCDAF4C1E86150C00AC78B4 /* OXPMenuViewController.swift */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 		2BCF3A481E7F87EE007A7F11 /* OXPSideMenu */ = {
@@ -327,6 +337,7 @@
 				2B1940541E755338003DF01B /*  AddCity */,
 				2BBCA90A1E4AEAFF0040962E /* Home */,
 				2BBCA9041E4AD1B20040962E /* Base */,
+				2BCDAF4B1E86148400AC78B4 /* Menu */,
 				2BE589591E46D0E2000E479B /* OXPRootViewController.swift */,
 			);
 			path = Views;
@@ -471,8 +482,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BCDAF4A1E86142900AC78B4 /* thinkpagecities.realm in Resources */,
 				2B7A9C381E81381300007D1E /* Info.strings in Resources */,
-				2B1940571E755656003DF01B /* thinkpagecities.realm in Resources */,
 				2BB408E01E7D10BB00A7F7E9 /* ThinkpageCities.plist in Resources */,
 				2BE5892E1E46C883000E479B /* LaunchScreen.storyboard in Resources */,
 				2BE5892B1E46C883000E479B /* Assets.xcassets in Resources */,
@@ -658,6 +669,7 @@
 				2BC954A81E777929008B414F /* OXPCitiesSectionModel.swift in Sources */,
 				2BA82F051E65709700E10C65 /* UIImage+OXPExtension.swift in Sources */,
 				2B29E67C1E7451940039A551 /* OXPUtils.swift in Sources */,
+				2BCDAF4D1E86150C00AC78B4 /* OXPMenuViewController.swift in Sources */,
 				2BBCA90E1E4B1AB60040962E /* OXPBaseViewController.swift in Sources */,
 				2B1940501E74ED6F003DF01B /* OXPThinkpageCityModel.swift in Sources */,
 			);

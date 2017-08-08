@@ -107,23 +107,20 @@ class OXPSideMenu : UIViewController {
     }
     
     func screenEdgePanGesture(recognizer: UIScreenEdgePanGestureRecognizer) {
-        NSLog("%@", NSStringFromCGPoint(recognizer.translation(in: recognizer.view)))
         if (recognizer.state == .began) {
-            startPoint = recognizer.translation(in: recognizer.view)
+            startPoint = recognizer.location(in: self.view)
             menuShow = true
             self.view.layer.speed = 0
             self.view.layer.timeOffset = 0
-            UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
+            UIView.animate(withDuration: TimeInterval(animationDuration), delay: 0, options: .curveLinear, animations: {
                 self.view.setNeedsUpdateConstraints()
                 self.view.layoutIfNeeded()
-            })
+            }, completion: nil)
         } else if (recognizer.state == .changed) {
-            let point = recognizer.translation(in: recognizer.view)
-            let distance = point.x-startPoint.x
-            if distance < 0 {
+            let point = recognizer.location(in: self.view)
+            percent = abs(point.x-startPoint.x)/abs(self.view.bounds.size.width - menuOffsetInContentShow - abs(startPoint.x))
+            if point.x < startPoint.x {
                 percent = 0
-            } else {
-                percent = distance/((recognizer.view?.bounds.size.width )! - menuOffsetInContentShow)
             }
             self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
         } else if (recognizer.state == .ended || recognizer.state == .cancelled || recognizer.state == .failed) {
@@ -134,43 +131,21 @@ class OXPSideMenu : UIViewController {
         }
     }
     
-    func edgeDisplayLinkTick(link: CADisplayLink) {
-        if (percent > 0.3) {
-            self.view.layer.timeOffset += link.duration
-        } else {
-            self.view.layer.timeOffset -= link.duration
-        }
-        if (self.view.layer.timeOffset < 0) {
-            self.view.layer.timeOffset = 0
-            link.invalidate()
-            self.view.layer.speed = 1
-            self.hidMenuViewController(animated: false)
-        } else if (self.view.layer.timeOffset > CFTimeInterval(animationDuration)) {
-            self.view.layer.timeOffset = CFTimeInterval(animationDuration)
-            link.invalidate()
-            self.view.layer.speed = 1
-            self.showMenuViewController(animated: false)
-        }
-    }
-    
     func panGesture(recognizer: UIScreenEdgePanGestureRecognizer) {
-        NSLog("%@", NSStringFromCGPoint(recognizer.translation(in: recognizer.view)))
         if (recognizer.state == .began) {
-            startPoint = recognizer.translation(in: recognizer.view)
+            startPoint = recognizer.location(in: self.view)
             menuShow = false
             self.view.layer.speed = 0
             self.view.layer.timeOffset = 0
-            UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
+            UIView.animate(withDuration: TimeInterval(animationDuration), delay: 0, options: .curveLinear, animations: {
                 self.view.setNeedsUpdateConstraints()
                 self.view.layoutIfNeeded()
-            })
+            }, completion: nil)
         } else if (recognizer.state == .changed) {
-            let point = recognizer.translation(in: recognizer.view)
-            let distance = -(point.x-startPoint.x)
-            if distance < 0 {
+            let point = recognizer.location(in: self.view)
+            percent = abs(point.x-startPoint.x)/abs(startPoint.x)
+            if (point.x > startPoint.x) {
                 percent = 0
-            } else {
-                percent = distance/((recognizer.view?.bounds.size.width )! - abs(startPoint.x))
             }
             self.view.layer.timeOffset = CFTimeInterval(percent * animationDuration)
         } else if (recognizer.state == .ended || recognizer.state == .cancelled || recognizer.state == .failed) {
@@ -181,22 +156,44 @@ class OXPSideMenu : UIViewController {
         }
     }
     
+    func edgeDisplayLinkTick(link: CADisplayLink) {
+        continueAnimation(link: link, percent: percent)
+        resumeAnimation(link: link, menuHidden: false)
+    }
+    
     func panDisplayLinkTick(link: CADisplayLink) {
+        continueAnimation(link: link, percent: percent)
+        resumeAnimation(link: link, menuHidden: true)
+    }
+    
+    func continueAnimation(link:CADisplayLink, percent:CGFloat) {
         if (percent > 0.3) {
             self.view.layer.timeOffset += link.duration
         } else {
             self.view.layer.timeOffset -= link.duration
         }
+    }
+    
+    func resumeAnimation(link:CADisplayLink, menuHidden:Bool) {
+        //menuHidden代表动画初始的方向,比如当前动画本就是为了隐藏菜单,虽然最后取消隐藏,那动画的初始方向就是menuHidden = true
         if (self.view.layer.timeOffset < 0) {
             self.view.layer.timeOffset = 0
             link.invalidate()
             self.view.layer.speed = 1
-            self.showMenuViewController(animated: false)
+            if (menuHidden) {
+                self.showMenuViewController(animated: false)
+            } else  {
+                self.hidMenuViewController(animated: false)
+            }
         } else if (self.view.layer.timeOffset > CFTimeInterval(animationDuration)) {
             self.view.layer.timeOffset = CFTimeInterval(animationDuration)
             link.invalidate()
             self.view.layer.speed = 1
-            self.hidMenuViewController(animated: false)
+            if (menuHidden) {
+                self.hidMenuViewController(animated: false)
+            } else {
+                self.showMenuViewController(animated: false)
+            }
         }
     }
     
