@@ -19,7 +19,15 @@ class OXPSideMenu : UIViewController {
     fileprivate var pagRecognizer:UIPanGestureRecognizer!
     fileprivate var startPoint = CGPoint(x: 0, y: 0)
     fileprivate var percent:CGFloat = 0
-    var menuShow = false
+    private var screenEdgePanEnable:Bool {
+        return true
+    }
+    var menuWillShow = false
+    var menuShow:Bool = false {
+        didSet {
+            print("menuShow = \(menuShow)")
+        }
+    }
     var menuViewController:UIViewController? {
         willSet {
             if menuViewController != nil {
@@ -31,7 +39,7 @@ class OXPSideMenu : UIViewController {
                 let menu = menuViewController!
                 self.addChildViewController(menu)
                 menuViewContainer.addSubview(menu.view)
-                menu.view.frame = menuViewContainer.frame
+                menu.view.frame = menuViewContainer.bounds
                 menu.view.autoresizingMask = UIViewAutoresizing.flexibleWidth.union(.flexibleHeight)
                 menu.didMove(toParentViewController: self)
             }
@@ -49,11 +57,23 @@ class OXPSideMenu : UIViewController {
                 let content = contentViewController!
                 self.addChildViewController(content)
                 contentViewContainer.addSubview(content.view)
-                content.view.frame = contentViewContainer.frame
+                content.view.frame = contentViewContainer.bounds
                 content.view.autoresizingMask = UIViewAutoresizing.flexibleWidth.union(.flexibleHeight)
                 content.didMove(toParentViewController: self)
             }
-            self.view.setNeedsUpdateConstraints()
+            if oldValue != nil {
+                if let shotView = oldValue!.view.snapshotView(afterScreenUpdates: true) {
+                    shotView.frame = contentViewContainer.bounds
+                    shotView.autoresizingMask = UIViewAutoresizing.flexibleWidth.union(.flexibleHeight)
+                    contentViewContainer.addSubview(shotView)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3/60, execute: {
+                        UIView.animate(withDuration: 0.25, animations: { 
+                            shotView.removeFromSuperview()
+                        })
+                    })
+                }
+            }
+//            self.view.setNeedsUpdateConstraints()
         }
     }
     var constraints = Array<NSLayoutConstraint>()
@@ -78,6 +98,7 @@ class OXPSideMenu : UIViewController {
         
         edgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(OXPSideMenu.screenEdgePanGesture(recognizer:)))
         edgeRecognizer.edges = .left
+        edgeRecognizer.isEnabled = self.screenEdgePanEnable
         self.view.isUserInteractionEnabled = true
         self.view.addGestureRecognizer(edgeRecognizer)
         
@@ -98,7 +119,7 @@ class OXPSideMenu : UIViewController {
         
         constraints.append(contentsOf: NSLayoutConstraint.constraints(withVisualFormat: "V:|[content]|", options:[], metrics: nil, views: ["content": contentViewContainer]))
         constraints.append(NSLayoutConstraint.init(item: contentViewContainer, attribute: .width, relatedBy: .equal, toItem: self.view, attribute: .width, multiplier: 1.0, constant: 0.0))
-        if (menuShow) {
+        if (menuWillShow) {
             constraints.append(NSLayoutConstraint.init(item: contentViewContainer, attribute: .left, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1.0, constant: -menuOffsetInContentShow))
         } else {
             constraints.append(NSLayoutConstraint.init(item: contentViewContainer, attribute: .left, relatedBy: .equal, toItem: self.view, attribute: .left, multiplier: 1.0, constant: 0.0))
@@ -109,7 +130,7 @@ class OXPSideMenu : UIViewController {
     func screenEdgePanGesture(recognizer: UIScreenEdgePanGestureRecognizer) {
         if (recognizer.state == .began) {
             startPoint = recognizer.location(in: self.view)
-            menuShow = true
+            menuWillShow = true
             self.view.layer.speed = 0
             self.view.layer.timeOffset = 0
             UIView.animate(withDuration: TimeInterval(animationDuration), delay: 0, options: .curveLinear, animations: {
@@ -128,13 +149,14 @@ class OXPSideMenu : UIViewController {
             displayLink.isPaused = false
             displayLink.add(to: RunLoop.main, forMode: .commonModes)
             recognizer.isEnabled = false
+            menuWillShow = percent > 0.3
         }
     }
     
-    func panGesture(recognizer: UIScreenEdgePanGestureRecognizer) {
+    func panGesture(recognizer: UIPanGestureRecognizer) {
         if (recognizer.state == .began) {
             startPoint = recognizer.location(in: self.view)
-            menuShow = false
+            menuWillShow = false
             self.view.layer.speed = 0
             self.view.layer.timeOffset = 0
             UIView.animate(withDuration: TimeInterval(animationDuration), delay: 0, options: .curveLinear, animations: {
@@ -153,17 +175,18 @@ class OXPSideMenu : UIViewController {
             displayLink.isPaused = false
             displayLink.add(to: RunLoop.main, forMode: .commonModes)
             recognizer.isEnabled = false
+            menuWillShow = percent < 0.3
         }
     }
     
     func edgeDisplayLinkTick(link: CADisplayLink) {
         continueAnimation(link: link, percent: percent)
-        resumeAnimation(link: link, menuHidden: false)
+        resumeAnimation(link: link, menuHidden: menuWillShow)
     }
     
     func panDisplayLinkTick(link: CADisplayLink) {
         continueAnimation(link: link, percent: percent)
-        resumeAnimation(link: link, menuHidden: true)
+        resumeAnimation(link: link, menuHidden: menuWillShow)
     }
     
     func continueAnimation(link:CADisplayLink, percent:CGFloat) {
@@ -183,22 +206,22 @@ class OXPSideMenu : UIViewController {
             if (menuHidden) {
                 self.showMenuViewController(animated: false)
             } else  {
-                self.hidMenuViewController(animated: false)
+                self.hideMenuViewController(animated: false)
             }
         } else if (self.view.layer.timeOffset > CFTimeInterval(animationDuration)) {
             self.view.layer.timeOffset = CFTimeInterval(animationDuration)
             link.invalidate()
             self.view.layer.speed = 1
             if (menuHidden) {
-                self.hidMenuViewController(animated: false)
-            } else {
                 self.showMenuViewController(animated: false)
+            } else {
+                self.hideMenuViewController(animated: false)
             }
         }
     }
     
     func showMenuViewController(animated: Bool) {
-        menuShow = true
+        menuWillShow = true
         if animated {
             UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
                 self.view.setNeedsUpdateConstraints()
@@ -206,17 +229,19 @@ class OXPSideMenu : UIViewController {
             }) { _ in
                 self.pagRecognizer.isEnabled = true
                 self.edgeRecognizer.isEnabled = false
+                self.menuShow = true
             }
         } else {
             self.view.setNeedsUpdateConstraints()
             self.view.layoutIfNeeded()
             self.pagRecognizer.isEnabled = true
             self.edgeRecognizer.isEnabled = false
+            menuShow = true
         }
     }
     
-    func hidMenuViewController(animated: Bool) {
-        menuShow = false
+    func hideMenuViewController(animated: Bool) {
+        menuWillShow = false
         if animated {
             UIView.animate(withDuration: TimeInterval(animationDuration), animations: {
                 self.view.setNeedsUpdateConstraints()
@@ -224,12 +249,14 @@ class OXPSideMenu : UIViewController {
             }) { _ in
                 self.pagRecognizer.isEnabled = false
                 self.edgeRecognizer.isEnabled = true
+                self.menuShow = false
             }
         } else {
             self.view.setNeedsUpdateConstraints()
             self.view.layoutIfNeeded()
             self.pagRecognizer.isEnabled = false
             self.edgeRecognizer.isEnabled = true
+            menuShow = false
         }
     }
 

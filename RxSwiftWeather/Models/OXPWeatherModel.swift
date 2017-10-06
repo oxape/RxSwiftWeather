@@ -30,8 +30,9 @@ struct OXPWeatherModel: Mappable {
         print(map.JSON)
         
         cityName <- map["results.0.location.name"]
-        
+        print(cityName)
         text <- map["results.0.now.text"]
+        print(text)
         
         code <- map["results.0.now.code"]
         

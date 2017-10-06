@@ -11,6 +11,8 @@
 		2B1940501E74ED6F003DF01B /* OXPThinkpageCityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B19404F1E74ED6F003DF01B /* OXPThinkpageCityModel.swift */; };
 		2B1940521E74EDAB003DF01B /* OXPTableVersionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1940511E74EDAB003DF01B /* OXPTableVersionModel.swift */; };
 		2B1940561E75535E003DF01B /* OXPCityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1940551E75535E003DF01B /* OXPCityListViewController.swift */; };
+		2B1E985A1F8770790067A94D /* UIBarButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E98591F8770790067A94D /* UIBarButtonExtension.swift */; };
+		2B1E985F1F8782940067A94D /* UIColorGradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1E985E1F8782940067A94D /* UIColorGradientColor.swift */; };
 		2B29E67C1E7451940039A551 /* OXPUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29E67B1E7451940039A551 /* OXPUtils.swift */; };
 		2B7A9C381E81381300007D1E /* Info.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2B7A9C371E81381300007D1E /* Info.strings */; };
 		2BA82F051E65709700E10C65 /* UIImage+OXPExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA82F041E65709700E10C65 /* UIImage+OXPExtension.swift */; };
@@ -37,6 +39,12 @@
 		2BE589391E46C883000E479B /* RxSwiftWeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE589381E46C883000E479B /* RxSwiftWeatherTests.swift */; };
 		2BE589441E46C883000E479B /* RxSwiftWeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE589431E46C883000E479B /* RxSwiftWeatherUITests.swift */; };
 		2BE5895A1E46D0E2000E479B /* OXPRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE589591E46D0E2000E479B /* OXPRootViewController.swift */; };
+		2BEBA2F61F7A592B006D98EB /* OXPContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBA2F01F7A592B006D98EB /* OXPContainerController.swift */; };
+		2BEBA2F71F7A592B006D98EB /* OXPContainerControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBA2F11F7A592B006D98EB /* OXPContainerControllerDelegate.swift */; };
+		2BEBA2F81F7A592B006D98EB /* OXPContainerTransitionContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBA2F21F7A592B006D98EB /* OXPContainerTransitionContext.swift */; };
+		2BEBA2F91F7A592B006D98EB /* OXPPercentDrivenInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBA2F31F7A592B006D98EB /* OXPPercentDrivenInteractiveTransition.swift */; };
+		2BEBA2FA1F7A592B006D98EB /* OXPSlideAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBA2F41F7A592B006D98EB /* OXPSlideAnimationController.swift */; };
+		2BEBA2FB1F7A592B006D98EB /* OXPTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBA2F51F7A592B006D98EB /* OXPTabBarController.swift */; };
 		9569D4F0FC5DAF236F63F3B0 /* Pods_RxSwiftWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 451307843BD09DC9B434C57D /* Pods_RxSwiftWeather.framework */; };
 		C4AF99B51297960F52B2A310 /* Pods_RxSwiftWeatherTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC319F93ADBDA6070E4B484 /* Pods_RxSwiftWeatherTests.framework */; };
 		F43E3484C5203D058902C25B /* Pods_RxSwiftWeatherUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC135597E04B68BABFED6E1 /* Pods_RxSwiftWeatherUITests.framework */; };
@@ -66,6 +74,8 @@
 		2B19404F1E74ED6F003DF01B /* OXPThinkpageCityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPThinkpageCityModel.swift; sourceTree = "<group>"; };
 		2B1940511E74EDAB003DF01B /* OXPTableVersionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPTableVersionModel.swift; sourceTree = "<group>"; };
 		2B1940551E75535E003DF01B /* OXPCityListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPCityListViewController.swift; sourceTree = "<group>"; };
+		2B1E98591F8770790067A94D /* UIBarButtonExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonExtension.swift; sourceTree = "<group>"; };
+		2B1E985E1F8782940067A94D /* UIColorGradientColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorGradientColor.swift; sourceTree = "<group>"; };
 		2B29E67B1E7451940039A551 /* OXPUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPUtils.swift; sourceTree = "<group>"; };
 		2B7A9C371E81381300007D1E /* Info.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Info.strings; sourceTree = "<group>"; };
 		2BA82F041E65709700E10C65 /* UIImage+OXPExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+OXPExtension.swift"; sourceTree = "<group>"; };
@@ -98,6 +108,12 @@
 		2BE589431E46C883000E479B /* RxSwiftWeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxSwiftWeatherUITests.swift; sourceTree = "<group>"; };
 		2BE589451E46C883000E479B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BE589591E46D0E2000E479B /* OXPRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPRootViewController.swift; sourceTree = "<group>"; };
+		2BEBA2F01F7A592B006D98EB /* OXPContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPContainerController.swift; sourceTree = "<group>"; };
+		2BEBA2F11F7A592B006D98EB /* OXPContainerControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPContainerControllerDelegate.swift; sourceTree = "<group>"; };
+		2BEBA2F21F7A592B006D98EB /* OXPContainerTransitionContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPContainerTransitionContext.swift; sourceTree = "<group>"; };
+		2BEBA2F31F7A592B006D98EB /* OXPPercentDrivenInteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPPercentDrivenInteractiveTransition.swift; sourceTree = "<group>"; };
+		2BEBA2F41F7A592B006D98EB /* OXPSlideAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPSlideAnimationController.swift; sourceTree = "<group>"; };
+		2BEBA2F51F7A592B006D98EB /* OXPTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OXPTabBarController.swift; sourceTree = "<group>"; };
 		2CC319F93ADBDA6070E4B484 /* Pods_RxSwiftWeatherTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxSwiftWeatherTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3962BD4ABDFF4B09FE7BF0F1 /* Pods-RxSwiftWeatherUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxSwiftWeatherUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RxSwiftWeatherUITests/Pods-RxSwiftWeatherUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		416E69A8EF51F06371D79EC1 /* Pods-RxSwiftWeatherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxSwiftWeatherTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RxSwiftWeatherTests/Pods-RxSwiftWeatherTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -164,6 +180,22 @@
 				2B1940551E75535E003DF01B /* OXPCityListViewController.swift */,
 			);
 			path = " AddCity";
+			sourceTree = "<group>";
+		};
+		2B1E98581F8770550067A94D /* UIBarButtonItemExtension */ = {
+			isa = PBXGroup;
+			children = (
+				2B1E98591F8770790067A94D /* UIBarButtonExtension.swift */,
+			);
+			path = UIBarButtonItemExtension;
+			sourceTree = "<group>";
+		};
+		2B1E985D1F8782940067A94D /* UIColorExtension */ = {
+			isa = PBXGroup;
+			children = (
+				2B1E985E1F8782940067A94D /* UIColorGradientColor.swift */,
+			);
+			path = UIColorExtension;
 			sourceTree = "<group>";
 		};
 		2B29E6751E7445CC0039A551 /* Support */ = {
@@ -307,6 +339,9 @@
 		2BE589511E46CB54000E479B /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				2B1E985D1F8782940067A94D /* UIColorExtension */,
+				2B1E98581F8770550067A94D /* UIBarButtonItemExtension */,
+				2BEBA2EF1F7A592B006D98EB /* OXPContainerController */,
 				2BCF3A481E7F87EE007A7F11 /* OXPSideMenu */,
 				2BB40CAB1E4C16A600DDD447 /* Rx */,
 				2BBCA9071E4AEA520040962E /* LTNavitgationBar */,
@@ -360,6 +395,19 @@
 				2BE589231E46C883000E479B /* AppDelegate.swift */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		2BEBA2EF1F7A592B006D98EB /* OXPContainerController */ = {
+			isa = PBXGroup;
+			children = (
+				2BEBA2F01F7A592B006D98EB /* OXPContainerController.swift */,
+				2BEBA2F11F7A592B006D98EB /* OXPContainerControllerDelegate.swift */,
+				2BEBA2F21F7A592B006D98EB /* OXPContainerTransitionContext.swift */,
+				2BEBA2F31F7A592B006D98EB /* OXPPercentDrivenInteractiveTransition.swift */,
+				2BEBA2F41F7A592B006D98EB /* OXPSlideAnimationController.swift */,
+				2BEBA2F51F7A592B006D98EB /* OXPTabBarController.swift */,
+			);
+			path = OXPContainerController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -655,23 +703,31 @@
 				2BE5895A1E46D0E2000E479B /* OXPRootViewController.swift in Sources */,
 				2BD11DAC1E666A290096DC20 /* CIFilter+OXPExtension.swift in Sources */,
 				2BBCA90C1E4AEB110040962E /* OXPHomeViewController.swift in Sources */,
+				2BEBA2F81F7A592B006D98EB /* OXPContainerTransitionContext.swift in Sources */,
 				2BB40CAE1E4C16A600DDD447 /* ObservableConvertibleType+Void.swift in Sources */,
 				2B08336B1E826A2800A837DD /* OXPSideMenuExtension.swift in Sources */,
 				2B1940561E75535E003DF01B /* OXPCityListViewController.swift in Sources */,
+				2BEBA2F71F7A592B006D98EB /* OXPContainerControllerDelegate.swift in Sources */,
 				2BB40CA41E4C007800DDD447 /* OXPWeatherModel.swift in Sources */,
+				2B1E985F1F8782940067A94D /* UIColorGradientColor.swift in Sources */,
 				2BBCA9091E4AEA520040962E /* UINavigationBarExtension.swift in Sources */,
 				2BE589241E46C883000E479B /* AppDelegate.swift in Sources */,
 				2BB40CAA1E4C11D000DDD447 /* OXPWeatherViewModel.swift in Sources */,
 				2BB40CA61E4C060A00DDD447 /* OXPWeatherAPIService.swift in Sources */,
 				2BBCA9061E4AD1D20040962E /* OXPBaseNavViewController.swift in Sources */,
+				2BEBA2FA1F7A592B006D98EB /* OXPSlideAnimationController.swift in Sources */,
 				2BB40CAF1E4C16A600DDD447 /* RxOperators.swift in Sources */,
 				2BB40CA81E4C06F400DDD447 /* ThinkpageWeather.swift in Sources */,
+				2BEBA2FB1F7A592B006D98EB /* OXPTabBarController.swift in Sources */,
 				2BC954A81E777929008B414F /* OXPCitiesSectionModel.swift in Sources */,
 				2BA82F051E65709700E10C65 /* UIImage+OXPExtension.swift in Sources */,
 				2B29E67C1E7451940039A551 /* OXPUtils.swift in Sources */,
+				2B1E985A1F8770790067A94D /* UIBarButtonExtension.swift in Sources */,
 				2BCDAF4D1E86150C00AC78B4 /* OXPMenuViewController.swift in Sources */,
 				2BBCA90E1E4B1AB60040962E /* OXPBaseViewController.swift in Sources */,
 				2B1940501E74ED6F003DF01B /* OXPThinkpageCityModel.swift in Sources */,
+				2BEBA2F61F7A592B006D98EB /* OXPContainerController.swift in Sources */,
+				2BEBA2F91F7A592B006D98EB /* OXPPercentDrivenInteractiveTransition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

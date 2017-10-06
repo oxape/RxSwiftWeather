@@ -43,3 +43,17 @@ extension OXPThinkpageCityModel {
         return lhs.cityID == rhs.cityID
     }
 }
+
+extension OXPThinkpageCityModel: NSCopying {
+    func copy(with zone: NSZone? = nil) -> Any {
+        let cityModel = OXPThinkpageCityModel()
+        cityModel.cityID = self.cityID
+        cityModel.zhName = self.zhName
+        cityModel.enName = self.enName
+        cityModel.country = self.country
+        cityModel.country_code = self.country_code
+        cityModel.zhArea = self.zhArea
+        cityModel.enArea = self.enArea
+        return cityModel
+    }
+}

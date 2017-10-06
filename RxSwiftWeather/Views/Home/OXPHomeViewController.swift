@@ -10,15 +10,20 @@ import UIKit
 import SnapKit
 import DGElasticPullToRefresh
 import FontAwesomeKit
+import CoreLocation
+import RxSwift
 
 class OXPHomeViewController: OXPBaseViewController {
-
+    var cityName: String?
+    var cityShowName: String?
+    fileprivate var firstRequest: Bool = true
     let scrollView = UIScrollView()
     let weatherContainer = UIView()
     let weatherIcon = UIImageView()
     let weatherLabel = UILabel()
     let temperatureLabel = UILabel()
     let contentView = UIView()
+    var locationManager:CLLocationManager!
     
     let viewModel = OXPWeatherViewModel()
     
@@ -28,13 +33,32 @@ class OXPHomeViewController: OXPBaseViewController {
         // Do any additional setup after loading the view.
         let plusIcon = FAKFontAwesome.plusIcon(withSize: 20)
         plusIcon?.addAttribute(NSForegroundColorAttributeName, value: UIColor.white)
-        let rightBarItem = UIBarButtonItem.init(image: plusIcon?.image(with: CGSize(width: 22, height: 22)), style: .plain, target: nil, action: nil)
-        self.navigationItem.rightBarButtonItem = rightBarItem
-        rightBarItem.rx.tap.asDriver(onErrorJustReturn: ())
+        let rightButton = UIButton()
+        rightButton.setImage(plusIcon?.image(with: CGSize(width: 22, height: 22)), for: .normal)
+        rightButton.sizeToFit()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
+        rightButton.rx.tap.asDriver(onErrorJustReturn: ())
             .drive(onNext: {
             [weak self] in
             self?.present(UINavigationController.init(rootViewController: OXPCityListViewController()), animated: true, completion: nil)
         }).addDisposableTo(self.disposeBag)
+        
+        let listIcon = FAKFontAwesome.listIcon(withSize: 20)
+        listIcon?.addAttribute(NSForegroundColorAttributeName, value: UIColor.white)
+        let leftButton = UIButton()
+        leftButton.setImage(listIcon?.image(with: CGSize(width: 22, height: 22)), for: .normal)
+        leftButton.sizeToFit()
+        leftButton.frame = CGRect(origin: CGPoint(x: 8, y: leftButton.frame.origin.y), size: leftButton.frame.size)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftButton)
+        leftButton.rx.tap.asDriver(onErrorJustReturn: ())
+            .drive(onNext: {
+                [weak self] in
+                if self?.sideMenu?.menuShow ?? false {
+                    self?.sideMenu?.hideMenuViewController(animated: true)
+                } else {
+                    self?.sideMenu?.showMenuViewController(animated: true)
+                }
+            }).addDisposableTo(self.disposeBag)
         self.navigationController?.navigationBar.lt_setElementsAlpha(alpha: 0.6)
     }
 
@@ -102,7 +126,8 @@ class OXPHomeViewController: OXPBaseViewController {
         let loadingView = DGElasticPullToRefreshLoadingViewCircle()
         loadingView.tintColor = UIColor(red: 78/255.0, green: 221/255.0, blue: 200/255.0, alpha: 1.0)
         scrollView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            self?.viewModel.refresh()
+            let city = self?.cityName ?? "hefei"
+            self?.viewModel.refresh(city)
             self?.scrollView.dg_stopLoading()
             }, loadingView: loadingView)
         scrollView.dg_setPullToRefreshFillColor(UIColor(red: 57/255.0, green: 67/255.0, blue: 89/255.0, alpha: 1.0))
@@ -119,12 +144,52 @@ class OXPHomeViewController: OXPBaseViewController {
             .distinctUntilChanged()
             .drive(UIApplication.shared.rx.isNetworkActivityIndicatorVisible)
             .addDisposableTo(self.disposeBag)
-        viewModel.cityName.drive(self.rx.title).addDisposableTo(self.disposeBag)
-        
-        viewModel.refresh()
+        Observable.of(Observable<String>.from(cityShowName).delay(0.5, scheduler: MainScheduler.instance),
+                      viewModel.cityName.asObservable())
+            .merge()
+            .asDriver(onErrorJustReturn: "")
+            .drive(self.rx.title).addDisposableTo(self.disposeBag)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("城市名: \(cityName)")
+        if (!firstRequest) {
+            return
+        }
+        firstRequest = false
+        if cityName == nil {
+            cityName = cityName ?? "hefei"
+            locationManager = CLLocationManager()
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.delegate = self
+        } else {
+            viewModel.refresh(cityName!)
+        }
     }
     
     deinit {
         scrollView.dg_removePullToRefresh()
+    }
+}
+
+extension OXPHomeViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch (status) {
+        case .authorizedAlways:
+            manager.startUpdatingLocation()
+        case .authorizedWhenInUse:
+            manager.startUpdatingLocation()
+        case .denied:
+            self.present(UIAlertController(title: "提示", message: "应用需要访问位置信息", preferredStyle: .alert), animated: true, completion: nil)
+        case .notDetermined: break
+        default: break
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        cityName = String.init(format: "%.6f:%.6f", (locations.first?.coordinate.latitude)!, (locations.first?.coordinate.longitude)!)
+        viewModel.refresh(cityName!)
+        locationManager.stopUpdatingLocation()
     }
 }

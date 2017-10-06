@@ -25,6 +25,9 @@ class OXPCityListViewController: OXPBaseViewController {
         searchBar.showsCancelButton = true
         self.view.backgroundColor = UIColor.white
         self.navigationItem.titleView = searchBar
+        searchBar.isTranslucent = true
+        searchBar.backgroundColor = UIColor(white: 0.1, alpha: 1)
+        self.navigationController?.navigationBar.lt_setBackgroundColor(backgroundColor: UIColor(white: 0.1, alpha: 1))
         let realm = try! Realm()
         let results = realm.objects(OXPThinkpageCityModel.self)
         for city in results {
@@ -38,14 +41,14 @@ class OXPCityListViewController: OXPBaseViewController {
         tableView.snp.makeConstraints { (maker) in
             maker.edges.equalTo(superView)
         }
-        
+        tableView.backgroundColor = UIColor(white: 0.1, alpha: 1)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
         dataSource.configureCell = { ds, tv, ip, item in
             let cell = tv.dequeueReusableCell(withIdentifier: "Cell") ?? UITableViewCell(style: .default, reuseIdentifier: "Cell")
             //TODO zhArea为""的处理,本地化处理
             cell.textLabel?.text = item.zhName+", "+item.zhArea+", "+item.country
-            
+            cell.textLabel?.backgroundColor = UIColor.white
             return cell
         }
     }
@@ -72,6 +75,22 @@ class OXPCityListViewController: OXPBaseViewController {
             [weak self] in
             self?.dismiss(animated: true, completion: nil)
         }).addDisposableTo(self.disposeBag)
+        
+        tableView.rx.itemSelected.map { (indexPath) -> OXPThinkpageCityModel? in
+            self.cityModels?[indexPath.row]
+            }.filter {$0 != nil}.subscribe(onNext: {
+                (cityModel) in
+                guard let realm = try? Realm() else {
+                    return
+                }
+                try! realm.write {
+                    realm.add(cityModel!.copy() as! Object, update: true)
+                }
+                self.searchBar.resignFirstResponder()
+                self.dismiss(animated: true) {
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "UpdateCities"), object: nil)
+                }
+            }).addDisposableTo(self.disposeBag)
     }
     //TODO 转换成ViewModel
     func queryCities(query: String) -> Observable<[OXPThinkpageCityModel]> {
@@ -100,31 +119,6 @@ class OXPCityListViewController: OXPBaseViewController {
 }
 
 extension OXPCityListViewController : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.01
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let realm = try! Realm()
-        let cityModel = cityModels?[indexPath.row]
-        if let city = cityModel {
-            let predicate = NSPredicate(format: "cityID = %@", city.cityID)
-            if realm.objects(OXPThinkpageCityModel.self).filter(predicate).first != nil {
-                return
-            }
-            let thinkpageCityModel = OXPThinkpageCityModel()
-            thinkpageCityModel.cityID = city.cityID;
-            thinkpageCityModel.zhName = city.zhName;
-            thinkpageCityModel.enName = city.enName;
-            thinkpageCityModel.zhArea = city.zhArea;
-            thinkpageCityModel.enArea = city.enArea;
-            thinkpageCityModel.country = city.country;
-            try! realm.write {
-                realm.add(thinkpageCityModel)
-            }
-        }
-        let _ = self.navigationController?.popViewController(animated: true)
-    }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.resignFirstResponder()

@@ -16,7 +16,7 @@ struct OXPWeatherViewModel {
     let disposeBag = DisposeBag()
     var weatherApiService:OXPWeatherAPIService;
     //输入
-    fileprivate let refreshAction = PublishSubject<Void>()
+    fileprivate let refreshAction = PublishSubject<String>()
     //输出
     var cityName:Driver<String>
     var weather:Driver<String>
@@ -32,7 +32,7 @@ struct OXPWeatherViewModel {
         
         weatherModel = refreshAction.debug().flatMapLatest({
             return apiService
-                .getWeather()
+                .getWeather(cityName: $0)
                 .trackActivity(ac)
         }).asDriver(onErrorJustReturn: OXPWeatherModel())
         
@@ -53,7 +53,7 @@ struct OXPWeatherViewModel {
         })
     }
     
-    func refresh() {
-        self.refreshAction.on(.next())
+    func refresh(_ cityName:String) {
+        self.refreshAction.on(.next(cityName))
     }
 }

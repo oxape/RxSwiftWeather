@@ -16,7 +16,7 @@ enum ThinkpageWeather{
 extension ThinkpageWeather: TargetType {
     //BaseURL
     var baseURL: URL {
-        return URL(string: "https://api.thinkpage.cn/v3/weather/")!
+        return URL(string: "http://api.thinkpage.cn/v3/weather/")!
     }
     //URL相对路径
     var path: String {

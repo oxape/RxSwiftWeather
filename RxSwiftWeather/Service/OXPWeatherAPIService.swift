@@ -24,7 +24,7 @@ class OXPWeatherAPIService {
         apiType = weatherAPIType
     }
     
-    func getWeather()->Observable<OXPWeatherModel> {
-        return provider.request(.Weather(cityName:"hefei")).mapObject(OXPWeatherModel.self)
+    func getWeather(cityName: String)->Observable<OXPWeatherModel> {
+        return provider.request(.Weather(cityName:cityName)).filter(statusCode: 200).mapObject(OXPWeatherModel.self)
     }
 }
